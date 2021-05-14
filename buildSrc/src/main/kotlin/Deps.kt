@@ -1,12 +1,14 @@
 object Deps {
     object Plugins {
         const val android = "com.android.tools.build:gradle:7.0.0-alpha15"
+        const val sqlDelight = "com.squareup.sqldelight:gradle-plugin:${SQLDelight.version}"
         const val daggerHilt = "com.google.dagger:hilt-android-gradle-plugin:${Dagger.version}"
         const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Androidx.Navigation.version}"
 
         object Kotlin {
             internal const val version = "1.5.0"
             const val gradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
+            const val serialization = "org.jetbrains.kotlin:kotlin-serialization:$version"
         }
     }
 
@@ -45,6 +47,40 @@ object Deps {
         }
     }
 
+    object Serialization {
+        private const val version = "1.2.1"
+        const val core = "org.jetbrains.kotlinx:kotlinx-serialization-core:$version"
+        const val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:$version"
+    }
+
+    object Ktor {
+        private const val version = "1.5.4"
+
+        object Client {
+            const val core = "io.ktor:ktor-client-core:$version"
+            const val okhttp = "io.ktor:ktor-client-okhttp:$version"
+            const val ios = "io.ktor:ktor-client-ios:$version"
+            const val serialization = "io.ktor:ktor-client-serialization:$version"
+        }
+    }
+
+    object OkHttp {
+        private const val version = "4.9.1"
+        const val client = "com.squareup.okhttp3:okhttp:$version"
+        const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
+    }
+
+    object SQLDelight {
+        internal const val version = "1.5.0"
+        const val runtime = "com.squareup.sqldelight:runtime:$version"
+        const val coroutines = "com.squareup.sqldelight:coroutines-extensions:$version"
+
+        object Driver {
+            const val android = "com.squareup.sqldelight:android-driver:$version"
+            const val native = "com.squareup.sqldelight:native-driver:$version"
+        }
+    }
+
     object Dagger {
         internal const val version = "2.35.1"
         const val hilt = "com.google.dagger:hilt-android:$version"
@@ -59,6 +95,7 @@ object Deps {
 
     object Test {
         const val junit = "junit:junit:4.13.2"
+        const val turbine = "app.cash.turbine:turbine:0.4.1"
 
         object Kotlin {
             const val common = "org.jetbrains.kotlin:kotlin-test-common:${Plugins.Kotlin.version}"
@@ -67,7 +104,7 @@ object Deps {
         }
     }
 
-    const val materialDesign = "com.google.android.material:material:1.4.0-alpha01"
+    const val materialDesign = "com.google.android.material:material:1.4.0-alpha02"
     const val inject = "com.chrynan.inject:inject:0.8.0"
 
     object Version {

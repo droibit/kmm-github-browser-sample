@@ -11,7 +11,9 @@ buildscript {
     }
     dependencies {
         classpath(Deps.Plugins.Kotlin.gradle)
+        classpath(Deps.Plugins.Kotlin.serialization)
         classpath(Deps.Plugins.android)
+        classpath(Deps.Plugins.sqlDelight)
     }
 }
 
