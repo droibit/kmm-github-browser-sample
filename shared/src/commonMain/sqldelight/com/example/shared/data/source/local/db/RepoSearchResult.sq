@@ -1,0 +1,14 @@
+CREATE TABLE repoSearchResult (
+    query TEXT NOT NULL,
+    repoIds TEXT NOT NULL,
+    totalCount INTEGER NOT NULL,
+    next INTEGER, PRIMARY KEY(query)
+);
+
+insert:
+INSERT OR REPLACE INTO repoSearchResult (query, repoIds, totalCount, next)
+VALUES (?,?,?,?);
+
+search:
+SELECT * FROM repoSearchResult WHERE query = ?;
+

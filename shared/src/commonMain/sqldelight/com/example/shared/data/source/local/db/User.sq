@@ -1,0 +1,16 @@
+CREATE TABLE user (
+    login TEXT NOT NULL,
+    avatarUrl TEXT,
+    name TEXT,
+    company TEXT,
+    reposUrl TEXT,
+    blog TEXT,
+    PRIMARY KEY(login)
+);
+
+insert:
+INSERT OR REPLACE INTO user (login, avatarUrl, name, company, reposUrl, blog)
+VALUES (?,?,?,?,?,?);
+
+findByLogin:
+SELECT * FROM user WHERE login = ?;
