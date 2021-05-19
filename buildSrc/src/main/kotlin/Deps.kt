@@ -1,6 +1,6 @@
 object Deps {
     object Plugins {
-        const val android = "com.android.tools.build:gradle:7.0.0-alpha15"
+        const val android = "com.android.tools.build:gradle:7.0.0-beta01"
         const val sqlDelight = "com.squareup.sqldelight:gradle-plugin:${SQLDelight.version}"
         const val daggerHilt = "com.google.dagger:hilt-android-gradle-plugin:${Dagger.version}"
         const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Androidx.Navigation.version}"
@@ -25,10 +25,10 @@ object Deps {
     }
 
     object Androidx {
-        const val core = "androidx.core:core-ktx:1.6.0-alpha02"
-        const val activity = "androidx.activity:activity-ktx:1.3.0-alpha07"
-        const val fragment = "androidx.fragment:fragment-ktx:1.3.3"
-        const val appCompat = "androidx.appcompat:appcompat:1.3.0-rc01"
+        const val core = "androidx.core:core-ktx:1.6.0-beta01"
+        const val activity = "androidx.activity:activity-ktx:1.3.0-alpha08"
+        const val fragment = "androidx.fragment:fragment-ktx:1.4.0-alpha01"
+        const val appCompat = "androidx.appcompat:appcompat:1.4.0-alpha01"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.2.0"
 
@@ -104,7 +104,7 @@ object Deps {
         }
     }
 
-    const val materialDesign = "com.google.android.material:material:1.4.0-alpha02"
+    const val materialDesign = "com.google.android.material:material:1.4.0-beta01"
     const val inject = "com.chrynan.inject:inject:0.8.0"
 
     object Version {
