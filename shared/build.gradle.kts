@@ -66,6 +66,7 @@ kotlin {
                 implementation(Deps.Ktor.Client.serialization)
                 implementation(Deps.SQLDelight.runtime)
                 implementation(Deps.SQLDelight.coroutines)
+                implementation(Deps.inject)
                 implementation(Deps.Komol.core)
             }
         }
