@@ -44,6 +44,7 @@ kotlin {
     android()
     ios()
 
+    // TODO: Automatically enable "sqlite3".
     cocoapods {
         // Configure fields required by CocoaPods.
         summary = "Shared module for the app."
@@ -106,4 +107,6 @@ sqldelight {
         packageName = "com.example.shared.data.source.local.db"
         schemaOutputDirectory = File(projectDir, "schemas")
     }
+
+    linkSqlite = true
 }
