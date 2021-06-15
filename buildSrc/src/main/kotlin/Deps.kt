@@ -82,7 +82,7 @@ object Deps {
     }
 
     object Dagger {
-        internal const val version = "2.37"
+        const val version = "2.37"
         const val hilt = "com.google.dagger:hilt-android:$version"
         const val compiler = "com.google.dagger:hilt-android-compiler:$version"
     }

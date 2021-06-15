@@ -1,9 +1,11 @@
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    kotlin("kapt")
     id("com.android.library")
     id("kotlinx-serialization")
     id("com.squareup.sqldelight")
+    id("dagger.hilt.android.plugin")
 }
 
 version = "1.0.0"
@@ -34,7 +36,6 @@ kotlin {
     android()
     ios()
 
-    // TODO: Automatically enable "sqlite3".
     cocoapods {
         // Configure fields required by CocoaPods.
         summary = "Shared module for the app."
@@ -74,6 +75,13 @@ kotlin {
                 implementation(Deps.OkHttp.client)
                 implementation(Deps.OkHttp.loggingInterceptor)
                 implementation(Deps.SQLDelight.Driver.android)
+
+                implementation(Deps.Dagger.hilt)
+                configurations.getByName("kapt").dependencies.add(
+                    org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
+                        "com.google.dagger", "hilt-android-compiler", Deps.Dagger.version
+                    )
+                )
             }
         }
         val androidTest by getting {
