@@ -27,6 +27,7 @@ targets:
         CURRENT_PROJECT_VERSION: 1
         ENABLE_PREVIEWS: true
         DEVELOPMENT_ASSET_PATHS: "\"Sources/Resources/Preview Content\""
+        OTHER_LDFLAGS: $(inherited) $(OTHER_LDFLAGS) -lsqlite3        
     sources:
       - path: Sources
     dependencies:
