@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -49,6 +51,9 @@ dependencies {
     implementation(Deps.Androidx.fragment)
 
     implementation(Deps.materialDesign)
+
+    implementation(Deps.Dagger.hilt)
+    "kapt"(Deps.Dagger.compiler)
 
     implementation(Deps.Komol.core)
     implementation(Deps.Komol.timber)

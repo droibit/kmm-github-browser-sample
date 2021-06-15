@@ -14,6 +14,7 @@ buildscript {
         classpath(Deps.Plugins.Kotlin.serialization)
         classpath(Deps.Plugins.android)
         classpath(Deps.Plugins.sqlDelight)
+        classpath(Deps.Plugins.daggerHilt)
     }
 }
 
