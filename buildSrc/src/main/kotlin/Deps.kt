@@ -1,12 +1,12 @@
 object Deps {
     object Plugins {
-        const val android = "com.android.tools.build:gradle:7.0.0-beta01"
+        const val android = "com.android.tools.build:gradle:7.0.0-beta03"
         const val sqlDelight = "com.squareup.sqldelight:gradle-plugin:${SQLDelight.version}"
         const val daggerHilt = "com.google.dagger:hilt-android-gradle-plugin:${Dagger.version}"
         const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Androidx.Navigation.version}"
 
         object Kotlin {
-            internal const val version = "1.5.0"
+            internal const val version = "1.5.10"
             const val gradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
             const val serialization = "org.jetbrains.kotlin:kotlin-serialization:$version"
         }
@@ -14,7 +14,7 @@ object Deps {
 
     object Coroutines {
         // Strictly requires `native-mt` version.
-        private const val version = "1.4.3-native-mt!!"
+        private const val version = "1.5.0-native-mt!!"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${version}"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
@@ -25,15 +25,15 @@ object Deps {
     }
 
     object Androidx {
-        const val core = "androidx.core:core-ktx:1.6.0-beta01"
-        const val activity = "androidx.activity:activity-ktx:1.3.0-alpha08"
-        const val fragment = "androidx.fragment:fragment-ktx:1.4.0-alpha01"
-        const val appCompat = "androidx.appcompat:appcompat:1.4.0-alpha01"
+        const val core = "androidx.core:core-ktx:1.6.0-beta02"
+        const val activity = "androidx.activity:activity-ktx:1.3.0-beta01"
+        const val fragment = "androidx.fragment:fragment-ktx:1.4.0-alpha02"
+        const val appCompat = "androidx.appcompat:appcompat:1.4.0-alpha02"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.2.0"
 
         object Navigation {
-            internal const val version = "2.3.5"
+            internal const val version = "2.4.0-alpha02"
             const val runtime = "androidx.navigation:navigation-runtime-ktx:$version"
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val ui = "androidx.navigation:navigation-ui-ktx:$version"
@@ -54,7 +54,7 @@ object Deps {
     }
 
     object Ktor {
-        private const val version = "1.5.4"
+        private const val version = "1.6.0"
 
         object Client {
             const val core = "io.ktor:ktor-client-core:$version"
@@ -82,7 +82,7 @@ object Deps {
     }
 
     object Dagger {
-        internal const val version = "2.35.1"
+        internal const val version = "2.37"
         const val hilt = "com.google.dagger:hilt-android:$version"
         const val compiler = "com.google.dagger:hilt-android-compiler:$version"
     }
@@ -104,7 +104,7 @@ object Deps {
         }
     }
 
-    const val materialDesign = "com.google.android.material:material:1.4.0-beta01"
+    const val materialDesign = "com.google.android.material:material:1.4.0-rc01"
     const val inject = "com.chrynan.inject:inject:0.8.0"
 
     object Version {

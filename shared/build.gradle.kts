@@ -27,16 +27,6 @@ android {
         }
     }
 
-    // Workaround for https://youtrack.jetbrains.com/issue/KT-43944
-    configurations {
-        create("androidTestApi")
-        create("androidTestDebugApi")
-        create("androidTestReleaseApi")
-        create("testApi")
-        create("testDebugApi")
-        create("testReleaseApi")
-    }
-
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 }
 
@@ -48,7 +38,7 @@ kotlin {
     cocoapods {
         // Configure fields required by CocoaPods.
         summary = "Shared module for the app."
-        homepage = "https://github.com/droibit/kotlin-multiplatform-mobile-template"
+        homepage = "https://github.com/droibit/kmm-github-browser-sample"
         authors = "Shinya Kumagai"
         license = "Apache License, Version 2.0"
         frameworkName = "Shared"
