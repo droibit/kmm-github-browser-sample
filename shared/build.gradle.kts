@@ -108,3 +108,10 @@ sqldelight {
 
     linkSqlite = true
 }
+
+kapt {
+    correctErrorTypes = true
+    arguments {
+        arg("dagger.experimentalDaggerErrorMessages", "enabled")
+    }
+}

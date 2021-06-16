@@ -9,7 +9,7 @@ android {
     compileSdk = BuildConfig.compileSdkVersion
 
     defaultConfig {
-        applicationId = "com.example.android.app"
+        applicationId = "com.example.android.app.github"
         minSdk = BuildConfig.minSdkVersion
         targetSdk = BuildConfig.targetSdkVersion
         versionCode = 1
