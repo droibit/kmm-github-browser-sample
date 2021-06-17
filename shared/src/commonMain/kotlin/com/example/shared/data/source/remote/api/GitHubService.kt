@@ -42,6 +42,16 @@ class GitHubService @Inject constructor(
         }
         return response.receiveIfSuccess()
     }
+
+    /**
+     * ref. https://docs.github.com/rest/reference/repos#get-a-repository
+     */
+    suspend fun getRepo(owner: String, name: String): RepositoryResponse {
+        val response: HttpResponse = httpClient.get("$baseURL/repos/$owner/$name") {
+            accept(contentType)
+        }
+        return response.receiveIfSuccess()
+    }
 }
 
 private suspend inline fun <reified T> HttpResponse.receiveIfSuccess(): T {
