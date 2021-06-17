@@ -3,6 +3,7 @@ package com.example.shared.data.source.remote.api
 import com.chrynan.inject.Inject
 import com.chrynan.inject.Named
 import com.chrynan.inject.Singleton
+import com.example.shared.data.source.remote.api.response.RepositoryResponse
 import com.example.shared.data.source.remote.api.response.UserResponse
 import com.github.droibit.komol.Komol
 import io.ktor.client.HttpClient
@@ -21,6 +22,9 @@ class GitHubService @Inject constructor(
 ) {
     private val contentType = ContentType("application", "vnd.github.v3+json")
 
+    /**
+     * ref. https://docs.github.com/rest/reference/users#get-a-user
+     */
     @Throws(ApiError::class, CancellationException::class)
     suspend fun getUser(login: String): UserResponse {
         val response: HttpResponse = httpClient.get("$baseURL/users/$login") {
@@ -29,7 +33,15 @@ class GitHubService @Inject constructor(
         return response.receiveIfSuccess()
     }
 
-    //suspend fun getRepos(login: String)
+    /**
+     * ref. https://docs.github.com/rest/reference/repos#list-repositories-for-a-user
+     */
+    suspend fun getRepos(login: String): List<RepositoryResponse> {
+        val response: HttpResponse = httpClient.get("$baseURL/users/$login/repos") {
+            accept(contentType)
+        }
+        return response.receiveIfSuccess()
+    }
 }
 
 private suspend inline fun <reified T> HttpResponse.receiveIfSuccess(): T {
