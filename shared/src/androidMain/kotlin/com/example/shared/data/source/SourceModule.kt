@@ -14,6 +14,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
+import kotlinx.serialization.json.Json
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Named
 import javax.inject.Singleton
@@ -50,12 +51,17 @@ object SourceModule {
                 }
             }
             install(JsonFeature) {
-                serializer = KotlinxSerializer()
+                serializer = KotlinxSerializer(
+                    Json {
+                        ignoreUnknownKeys = true
+                        coerceInputValues = true
+                    }
+                )
             }
         }
     }
 
     @Named("githubApiBaseURL")
     @Provides
-    fun provideGitHubApiBaseURL(): String = "https://api.github.com/"
+    fun provideGitHubApiBaseURL(): String = "https://api.github.com"
 }
