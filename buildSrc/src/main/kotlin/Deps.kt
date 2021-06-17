@@ -1,6 +1,8 @@
 object Deps {
     object Plugins {
-        const val android = "com.android.tools.build:gradle:7.0.0-beta03"
+        // Workaround for Hilt plugin crash.
+        // ref. https://github.com/google/dagger/issues/2700
+        const val android = "com.android.tools.build:gradle:7.1.0-alpha02"
         const val sqlDelight = "com.squareup.sqldelight:gradle-plugin:${SQLDelight.version}"
         const val daggerHilt = "com.google.dagger:hilt-android-gradle-plugin:${Dagger.version}"
         const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Androidx.Navigation.version}"
@@ -25,22 +27,22 @@ object Deps {
     }
 
     object Androidx {
-        const val core = "androidx.core:core-ktx:1.6.0-beta02"
-        const val activity = "androidx.activity:activity-ktx:1.3.0-beta01"
-        const val fragment = "androidx.fragment:fragment-ktx:1.4.0-alpha02"
+        const val core = "androidx.core:core-ktx:1.6.0-rc01"
+        const val activity = "androidx.activity:activity-ktx:1.3.0-beta02"
+        const val fragment = "androidx.fragment:fragment-ktx:1.4.0-alpha03"
         const val appCompat = "androidx.appcompat:appcompat:1.4.0-alpha02"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.2.0"
 
         object Navigation {
-            internal const val version = "2.4.0-alpha02"
+            internal const val version = "2.4.0-alpha03"
             const val runtime = "androidx.navigation:navigation-runtime-ktx:$version"
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val ui = "androidx.navigation:navigation-ui-ktx:$version"
         }
 
         object Lifecycle {
-            private const val version = "2.4.0-alpha01"
+            private const val version = "2.4.0-alpha02"
             const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
             const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
             const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
