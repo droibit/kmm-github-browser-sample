@@ -27,12 +27,16 @@ class Response<T>(
         suspend inline fun <reified T> create(rawResponse: HttpResponse): Response<T> {
             // MEMO: The detailed control is omitted for the sample.
             if (!rawResponse.status.isSuccess()) {
-                return Response(null, rawResponse)
+                 return Response(null, rawResponse)
             }
             return Response(
                 body = rawResponse.receive(),
                 raw = rawResponse
             )
+        }
+
+        inline fun <reified T> error(rawResponse: HttpResponse): Response<T> {
+            return Response(null, rawResponse)
         }
     }
 }

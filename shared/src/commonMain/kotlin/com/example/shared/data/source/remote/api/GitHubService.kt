@@ -1,19 +1,20 @@
 package com.example.shared.data.source.remote.api
 
 import com.chrynan.inject.Inject
-import com.chrynan.inject.Named
 import com.chrynan.inject.Singleton
+import com.example.shared.data.source.remote.api.response.Response
 import com.example.shared.data.source.remote.api.response.body.ContributorResponseBody
 import com.example.shared.data.source.remote.api.response.body.RepositoryResponseBody
-import com.example.shared.data.source.remote.api.response.Response
 import com.example.shared.data.source.remote.api.response.body.SearchRepositoriesResponseBody
 import com.example.shared.data.source.remote.api.response.body.UserResponseBody
 import io.ktor.client.HttpClient
+import io.ktor.client.features.ResponseException
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import kotlin.coroutines.cancellation.CancellationException
 
 @Singleton
@@ -34,10 +35,17 @@ class GitHubService(
      */
     @Throws(GitHubApiError::class, CancellationException::class)
     suspend fun getUser(login: String): Response<UserResponseBody> {
-        val rawResponse: HttpResponse = httpClient.get("$baseURL/users/$login") {
-            accept(contentType)
+        return try {
+            val rawResponse: HttpResponse = httpClient.get("$baseURL/users/$login") {
+                accept(contentType)
+            }
+            createGitHubResponse(rawResponse)
+        } catch (e: ResponseException) {
+            if (e.response.status != HttpStatusCode.NotFound) {
+                throw GitHubApiError(e.response, e)
+            }
+            Response.error(e.response)
         }
-        return createGitHubResponse(rawResponse)
     }
 
     /**
@@ -45,10 +53,17 @@ class GitHubService(
      */
     @Throws(GitHubApiError::class, CancellationException::class)
     suspend fun getRepos(login: String): Response<List<RepositoryResponseBody>> {
-        val rawResponse: HttpResponse = httpClient.get("$baseURL/users/$login/repos") {
-            accept(contentType)
+        return try {
+            val rawResponse: HttpResponse = httpClient.get("$baseURL/users/$login/repos") {
+                accept(contentType)
+            }
+            createGitHubResponse(rawResponse)
+        } catch (e: ResponseException) {
+            if (e.response.status != HttpStatusCode.NotFound) {
+                throw GitHubApiError(e.response, e)
+            }
+            Response.error(e.response)
         }
-        return createGitHubResponse(rawResponse)
     }
 
     /**
@@ -56,11 +71,17 @@ class GitHubService(
      */
     @Throws(GitHubApiError::class, CancellationException::class)
     suspend fun getRepo(owner: String, name: String): Response<RepositoryResponseBody> {
-        val rawResponse: HttpResponse = httpClient.get("$baseURL/repos/$owner/$name") {
-            accept(contentType)
+        return try {
+            val rawResponse: HttpResponse = httpClient.get("$baseURL/repos/$owner/$name") {
+                accept(contentType)
+            }
+            createGitHubResponse(rawResponse)
+        } catch (e: ResponseException) {
+            if (e.response.status != HttpStatusCode.NotFound) {
+                throw GitHubApiError(e.response, e)
+            }
+            Response.error(e.response)
         }
-
-        return createGitHubResponse(rawResponse)
     }
 
     /**
@@ -71,10 +92,18 @@ class GitHubService(
         owner: String,
         name: String
     ): Response<List<ContributorResponseBody>> {
-        val rawResponse: HttpResponse = httpClient.get("$baseURL/repos/$owner/$name/contributors") {
-            accept(contentType)
+        return try {
+            val rawResponse: HttpResponse =
+                httpClient.get("$baseURL/repos/$owner/$name/contributors") {
+                    accept(contentType)
+                }
+            createGitHubResponse(rawResponse)
+        } catch (e: ResponseException) {
+            if (e.response.status != HttpStatusCode.NotFound) {
+                throw GitHubApiError(e.response, e)
+            }
+            Response.error(e.response)
         }
-        return createGitHubResponse(rawResponse)
     }
 
     /**
@@ -85,13 +114,17 @@ class GitHubService(
         query: String,
         page: Int? = null
     ): Response<SearchRepositoriesResponseBody> {
-        val rawResponse: HttpResponse = httpClient.get("$baseURL/search/repositories") {
-            accept(contentType)
+        try {
+            val rawResponse: HttpResponse = httpClient.get("$baseURL/search/repositories") {
+                accept(contentType)
 
-            parameter("q", query)
-            parameter("page", page)
+                parameter("q", query)
+                parameter("page", page)
+            }
+            return createGitHubResponse(rawResponse)
+        } catch (e: ResponseException) {
+            throw GitHubApiError(e.response, e)
         }
-        return createGitHubResponse(rawResponse)
     }
 }
 

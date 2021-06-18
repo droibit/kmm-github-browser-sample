@@ -5,7 +5,7 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
 import kotlin.LazyThreadSafetyMode.NONE
 
-class GitHubApiError(
+internal class GitHubApiError(
     val rawResponse: HttpResponse,
     cause: Throwable? = null
 ) : Exception(cause) {
