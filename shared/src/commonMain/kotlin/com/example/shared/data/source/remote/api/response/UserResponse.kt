@@ -10,9 +10,8 @@ import kotlinx.serialization.Serializable
 data class UserResponse(
     val login: String,
     val id: Int,
-    val url: String,
+    @SerialName("html_url") val url: String,
     @SerialName("avatar_url") val avatarUrl: String,
-    @SerialName("repos_url") val reposUrl: String,
     @SerialName("blog") val blogUrl: String?,
     val name: String,
     val company: String?,

@@ -3,6 +3,7 @@ package com.example.shared.data.source.remote.api
 import com.chrynan.inject.Inject
 import com.chrynan.inject.Named
 import com.chrynan.inject.Singleton
+import com.example.shared.data.source.remote.api.response.ContributorResponse
 import com.example.shared.data.source.remote.api.response.RepositoryResponse
 import com.example.shared.data.source.remote.api.response.UserResponse
 import com.github.droibit.komol.Komol
@@ -48,6 +49,17 @@ class GitHubService @Inject constructor(
      */
     suspend fun getRepo(owner: String, name: String): RepositoryResponse {
         val response: HttpResponse = httpClient.get("$baseURL/repos/$owner/$name") {
+            accept(contentType)
+        }
+        return response.receiveIfSuccess()
+    }
+
+    /**
+     * ref. https://docs.github.com/en/rest/reference/repos#list-repository-contributors
+     */
+    @Throws(GitHubApiError::class, CancellationException::class)
+    suspend fun getContributors(owner: String, name: String): List<ContributorResponse> {
+        val response: HttpResponse = httpClient.get("$baseURL/repos/$owner/$name/contributors") {
             accept(contentType)
         }
         return response.receiveIfSuccess()

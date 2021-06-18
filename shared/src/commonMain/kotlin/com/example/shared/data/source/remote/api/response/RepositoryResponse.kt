@@ -10,7 +10,7 @@ data class RepositoryResponse(
     val description: String?,
     @SerialName("stargazers_count") val stargazersCount: Int,
     @SerialName("full_name") val fullName: String,
-    val url: String,
+    @SerialName("html_url") val url: String,
     val owner: RepositoryOwnerResponse,
 )
 
@@ -18,6 +18,6 @@ data class RepositoryResponse(
 data class RepositoryOwnerResponse(
     val login: String,
     val id: Int,
-    val url: String,
+    @SerialName("html_url") val url: String,
     @SerialName("avatar_url") val avatarUrl: String,
 )
