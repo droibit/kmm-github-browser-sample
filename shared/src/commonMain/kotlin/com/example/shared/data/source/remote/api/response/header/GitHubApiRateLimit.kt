@@ -1,4 +1,4 @@
-package com.example.shared.data.source.remote.api.response
+package com.example.shared.data.source.remote.api.response.header
 
 import io.ktor.http.Headers
 

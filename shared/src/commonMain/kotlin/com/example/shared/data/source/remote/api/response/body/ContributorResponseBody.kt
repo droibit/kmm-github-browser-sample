@@ -1,10 +1,10 @@
-package com.example.shared.data.source.remote.api.response
+package com.example.shared.data.source.remote.api.response.body
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ContributorResponse(
+data class ContributorResponseBody(
     val login: String,
     val id: Int,
     @SerialName("avatar_url") val avatarUrl: String,

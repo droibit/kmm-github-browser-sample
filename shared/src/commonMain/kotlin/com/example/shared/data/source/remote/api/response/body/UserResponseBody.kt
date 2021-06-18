@@ -1,4 +1,4 @@
-package com.example.shared.data.source.remote.api.response
+package com.example.shared.data.source.remote.api.response.body
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * ref. https://docs.github.com/rest/reference/users#get-a-user
  */
 @Serializable
-data class UserResponse(
+data class UserResponseBody(
     val login: String,
     val id: Int,
     @SerialName("html_url") val url: String,

@@ -1,21 +1,21 @@
-package com.example.shared.data.source.remote.api.response
+package com.example.shared.data.source.remote.api.response.body
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RepositoryResponse(
+data class RepositoryResponseBody(
     val id: Int,
     val name: String,
     val description: String?,
     @SerialName("stargazers_count") val stargazersCount: Int,
     @SerialName("full_name") val fullName: String,
     @SerialName("html_url") val url: String,
-    val owner: RepositoryOwnerResponse,
+    val owner: RepositoryOwnerResponseBody,
 )
 
 @Serializable
-data class RepositoryOwnerResponse(
+data class RepositoryOwnerResponseBody(
     val login: String,
     val id: Int,
     @SerialName("html_url") val url: String,
