@@ -9,3 +9,6 @@ fun bootstrap(debuggable: Boolean) {
     }
     Komol.d("Bootstrapped.")
 }
+
+// TODO: Consider a better way to export `Komol`.
+fun exportKomol(): Komol = Komol
