@@ -6,10 +6,12 @@ import com.chrynan.inject.Singleton
 import com.example.shared.data.source.remote.api.response.body.ContributorResponseBody
 import com.example.shared.data.source.remote.api.response.body.RepositoryResponseBody
 import com.example.shared.data.source.remote.api.response.Response
+import com.example.shared.data.source.remote.api.response.body.SearchRepositoriesResponseBody
 import com.example.shared.data.source.remote.api.response.body.UserResponseBody
 import io.ktor.client.HttpClient
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import kotlin.coroutines.cancellation.CancellationException
@@ -62,6 +64,20 @@ class GitHubService @Inject constructor(
     suspend fun getContributors(owner: String, name: String): Response<List<ContributorResponseBody>> {
         val rawResponse: HttpResponse = httpClient.get("$baseURL/repos/$owner/$name/contributors") {
             accept(contentType)
+        }
+        return createGitHubResponse(rawResponse)
+    }
+
+    /**
+     * ref. https://docs.github.com/en/rest/reference/search#search-repositories
+     */
+    @Throws(GitHubApiError::class, CancellationException::class)
+    suspend fun searchRepos(query: String, page: Int? = null): Response<SearchRepositoriesResponseBody> {
+        val rawResponse: HttpResponse = httpClient.get("$baseURL/search/repositories") {
+            accept(contentType)
+
+            parameter("q", query)
+            parameter("page", page)
         }
         return createGitHubResponse(rawResponse)
     }
