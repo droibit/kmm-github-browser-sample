@@ -26,6 +26,3 @@ data class GitHubApiRateLimit(
         }
     }
 }
-
-private fun Headers.getInt(key: String): Int? = this[key]?.run { toIntOrNull() }
-private fun Headers.getLong(key: String): Long? = this[key]?.run { toLongOrNull() }
