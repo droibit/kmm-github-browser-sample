@@ -6,7 +6,6 @@ import com.chrynan.inject.Singleton
 import com.example.shared.data.source.remote.api.response.ContributorResponse
 import com.example.shared.data.source.remote.api.response.RepositoryResponse
 import com.example.shared.data.source.remote.api.response.UserResponse
-import com.github.droibit.komol.Komol
 import io.ktor.client.HttpClient
 import io.ktor.client.call.receive
 import io.ktor.client.request.accept
@@ -26,7 +25,7 @@ class GitHubService @Inject constructor(
     /**
      * ref. https://docs.github.com/rest/reference/users#get-a-user
      */
-    @Throws(ApiError::class, CancellationException::class)
+    @Throws(GitHubApiError::class, CancellationException::class)
     suspend fun getUser(login: String): UserResponse {
         val response: HttpResponse = httpClient.get("$baseURL/users/$login") {
             accept(contentType)
@@ -37,6 +36,7 @@ class GitHubService @Inject constructor(
     /**
      * ref. https://docs.github.com/rest/reference/repos#list-repositories-for-a-user
      */
+    @Throws(GitHubApiError::class, CancellationException::class)
     suspend fun getRepos(login: String): List<RepositoryResponse> {
         val response: HttpResponse = httpClient.get("$baseURL/users/$login/repos") {
             accept(contentType)
@@ -47,6 +47,7 @@ class GitHubService @Inject constructor(
     /**
      * ref. https://docs.github.com/rest/reference/repos#get-a-repository
      */
+    @Throws(GitHubApiError::class, CancellationException::class)
     suspend fun getRepo(owner: String, name: String): RepositoryResponse {
         val response: HttpResponse = httpClient.get("$baseURL/repos/$owner/$name") {
             accept(contentType)
@@ -69,10 +70,10 @@ class GitHubService @Inject constructor(
 private suspend inline fun <reified T> HttpResponse.receiveIfSuccess(): T {
     try {
         if (!status.isSuccess()) {
-            throw ApiError(this)
+            throw GitHubApiError(this)
         }
         return receive()
     } catch (e: Exception) {
-        throw ApiError(this, cause = e)
+        throw GitHubApiError(this, cause = e)
     }
 }
