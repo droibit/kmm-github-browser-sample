@@ -9,6 +9,7 @@ import com.example.shared.data.source.remote.api.GitHubService
 import com.example.shared.model.GitHubError
 import com.example.shared.utils.CoroutinesDispatcherProvider
 import com.github.droibit.komol.Komol
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -19,7 +20,7 @@ class UserRepository @Inject constructor(
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
     @Throws(GitHubError::class, CancellationException::class)
-    suspend fun loadUser(login: String): User = withContext(dispatcherProvider.io) {
+    suspend fun loadUser(login: String): User? = withContext(dispatcherProvider.io) {
         val user = appDatabase.userQueries.findByLogin(login)
             .executeAsOneOrNull()
         if (user != null) {
@@ -28,10 +29,7 @@ class UserRepository @Inject constructor(
 
         try {
             val response = gitHubService.getUser(login)
-            if (!response.isSuccessful || response.body == null) {
-                throw GitHubError(response.raw)
-            }
-            val body = requireNotNull(response.body)
+            val body = response.body ?: return@withContext null
             return@withContext User(
                 body.login,
                 body.avatarUrl,

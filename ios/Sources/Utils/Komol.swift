@@ -65,9 +65,3 @@ private extension Error {
             ?? KotlinThrowable(error: self)
     }
 }
-
-private extension KotlinThrowable {
-    convenience init(error: Error) {
-        self.init(message: error.localizedDescription)
-    }
-}

@@ -1,15 +1,12 @@
-package com.example.shared.data.source
+package com.example.shared.data.repository.user
 
-import com.example.shared.data.repository.user.UserRepository
 import com.example.shared.data.source.local.db.AppDatabase
-import com.example.shared.data.source.local.db.User
 import com.example.shared.data.source.remote.api.GitHubService
 import com.example.shared.utils.CoroutinesDispatcherProvider
-import com.example.shared.utils.SuspendWrapper
+import com.example.shared.utils.NullableSuspendWrapper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import kotlin.native.concurrent.freeze
 
 class UserRepositoryIos(
     private val repository: UserRepository,
@@ -18,13 +15,8 @@ class UserRepositoryIos(
     private val supervisorJob = SupervisorJob()
     private val scope: CoroutineScope = CoroutineScope(supervisorJob + dispatcher)
 
-    init {
-        freeze()
-    }
-
-    fun loadUserWrapper(login: String): SuspendWrapper<User> {
-        return SuspendWrapper(scope) { repository.loadUser(login) }
-    }
+    fun loadUserWrapper(login: String) =
+        NullableSuspendWrapper(scope) { repository.loadUser(login) }
 
     companion object Provider {
         fun get(
