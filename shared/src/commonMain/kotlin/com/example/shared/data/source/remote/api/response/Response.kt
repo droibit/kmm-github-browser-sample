@@ -1,17 +1,23 @@
 package com.example.shared.data.source.remote.api.response
 
+import co.touchlab.stately.freeze
 import io.ktor.client.call.receive
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.Headers
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.isSuccess
 
 class Response<T>(
     val body: T?,
     val raw: HttpResponse,
 ) {
-    val code: Int get() = raw.status.value
+    val status: HttpStatusCode get() = raw.status
     val isSuccessful: Boolean get() = raw.status.isSuccess()
     val headers: Headers get() = raw.headers
+
+    init {
+        freeze()
+    }
 
     override fun toString(): String {
         return raw.toString()

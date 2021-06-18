@@ -17,10 +17,16 @@ import io.ktor.http.ContentType
 import kotlin.coroutines.cancellation.CancellationException
 
 @Singleton
-class GitHubService @Inject constructor(
-    @Named("githubApiBaseURL") private val baseURL: String,
+class GitHubService(
+    private val baseURL: String,
     private val httpClient: HttpClient
 ) {
+    @Inject
+    constructor(httpClient: HttpClient) : this(
+        baseURL = "https://api.github.com",
+        httpClient
+    )
+
     private val contentType = ContentType("application", "vnd.github.v3+json")
 
     /**
@@ -61,7 +67,10 @@ class GitHubService @Inject constructor(
      * ref. https://docs.github.com/en/rest/reference/repos#list-repository-contributors
      */
     @Throws(GitHubApiError::class, CancellationException::class)
-    suspend fun getContributors(owner: String, name: String): Response<List<ContributorResponseBody>> {
+    suspend fun getContributors(
+        owner: String,
+        name: String
+    ): Response<List<ContributorResponseBody>> {
         val rawResponse: HttpResponse = httpClient.get("$baseURL/repos/$owner/$name/contributors") {
             accept(contentType)
         }
@@ -72,7 +81,10 @@ class GitHubService @Inject constructor(
      * ref. https://docs.github.com/en/rest/reference/search#search-repositories
      */
     @Throws(GitHubApiError::class, CancellationException::class)
-    suspend fun searchRepos(query: String, page: Int? = null): Response<SearchRepositoriesResponseBody> {
+    suspend fun searchRepos(
+        query: String,
+        page: Int? = null
+    ): Response<SearchRepositoriesResponseBody> {
         val rawResponse: HttpResponse = httpClient.get("$baseURL/search/repositories") {
             accept(contentType)
 

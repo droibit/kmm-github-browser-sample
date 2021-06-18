@@ -9,7 +9,7 @@ data class GitHubApiRateLimit(
     val limit: Int,
     val remaining: Int,
     val used: Int,
-    val reset: Long,
+    val resetMillis: Long,
 ) {
     companion object {
         private const val KEY_LIMIT = "x-ratelimit-limit"

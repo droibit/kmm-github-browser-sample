@@ -13,7 +13,7 @@ object HttpClientProvider {
         HttpClient(Ios) {
             engine {
                 configureSession {
-                    timeoutIntervalForRequest = 30
+                    timeoutIntervalForRequest = 30.0
                 }
             }
             install(JsonFeature) {

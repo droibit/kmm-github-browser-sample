@@ -2,6 +2,7 @@ package com.example.shared.data.source.remote.api
 
 import com.example.shared.data.source.remote.api.response.header.GitHubApiRateLimit
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.HttpStatusCode
 import kotlin.LazyThreadSafetyMode.NONE
 
 class GitHubApiError(
@@ -12,6 +13,8 @@ class GitHubApiError(
     val rateLimit: GitHubApiRateLimit? by lazy(NONE) {
         GitHubApiRateLimit(rawResponse.headers)
     }
+
+    val status: HttpStatusCode get() = rawResponse.status
 
     override fun toString(): String {
         if (cause == null) {

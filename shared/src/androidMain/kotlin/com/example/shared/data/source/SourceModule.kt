@@ -60,8 +60,4 @@ object SourceModule {
             }
         }
     }
-
-    @Named("githubApiBaseURL")
-    @Provides
-    fun provideGitHubApiBaseURL(): String = "https://api.github.com"
 }
