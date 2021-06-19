@@ -13,7 +13,7 @@ INSERT OR REPLACE INTO contributor (repoName, repoOwner, login, contributions, a
 VALUES ?;
 
 loadContributors:
-SELECT login, avatarUrl, repoName, repoOwner, contributions
+SELECT repoName, repoOwner, login, contributions, avatarUrl
 FROM contributor
 WHERE repoName = ? AND repoOwner = ?
 ORDER BY contributions DESC;

@@ -4,7 +4,8 @@ CREATE TABLE repoSearchResult (
     query TEXT NOT NULL,
     repoIds TEXT AS List<String> NOT NULL,
     totalCount INTEGER NOT NULL,
-    next INTEGER, PRIMARY KEY(query)
+    next INTEGER,
+    PRIMARY KEY(query)
 );
 
 insert:

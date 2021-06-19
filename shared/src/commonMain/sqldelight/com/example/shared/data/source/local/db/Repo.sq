@@ -13,7 +13,7 @@ CREATE TABLE repo (
 
 createRepoIfNotExists:
 INSERT OR IGNORE INTO repo (id, name, fullName, description, stars, ownerLogin, ownerUrl)
- VALUES (?,?,?,?,?,?,?);
+ VALUES ?;
 
 insert:
 INSERT OR REPLACE INTO repo (id, name, fullName, description, stars, ownerLogin, ownerUrl)
@@ -25,5 +25,5 @@ SELECT * FROM repo WHERE ownerLogin = ? AND name = ?;
 loadRepositories:
 SELECT * FROM repo WHERE ownerLogin = ? ORDER BY stars DESC;
 
-loadById:
+loadByIds:
 SELECT * FROM repo WHERE id IN ?;
