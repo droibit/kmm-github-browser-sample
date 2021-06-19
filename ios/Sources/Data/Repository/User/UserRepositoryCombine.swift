@@ -4,7 +4,7 @@ import Combine
 import Foundation
 import Shared
 
-class UserRepositoryCombine {
+class UserRepositoryCombine: UserRepository {
     private let delegate: UserRepositoryIos
 
     init(delegate: UserRepositoryIos) {

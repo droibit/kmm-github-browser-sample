@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UserResponseBody(
     val login: String,
-    val id: Int,
+    val id: Long,
     @SerialName("html_url") val url: String,
     @SerialName("avatar_url") val avatarUrl: String,
     @SerialName("repos_url") val reposUrl: String,

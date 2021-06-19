@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ContributorResponseBody(
     val login: String,
-    val id: Int,
+    val id: Long,
     @SerialName("avatar_url") val avatarUrl: String,
     @SerialName("html_url") val url: String,
     val contributions: Int

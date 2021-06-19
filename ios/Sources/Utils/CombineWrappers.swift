@@ -55,6 +55,25 @@ func createFuture<T, E>(suspendWrapper: SuspendWrapper<T>) -> AnyPublisher<T, E>
     .eraseToAnyPublisher()
 }
 
+func createFuture<T, R, E>(suspendWrapper: SuspendWrapper<T>, transform: @escaping (T) -> R) -> AnyPublisher<R, E> where E: Error {
+    Deferred<Publishers.HandleEvents<Future<R, E>>> {
+        var job: Kotlinx_coroutines_coreJob?
+        return Future { promise in
+            job = suspendWrapper.subscribe(
+                onSuccess: { item in
+                    promise(.success(transform(item)))
+                },
+                onThrow: { error in
+                    promise(.failure(error as! E))
+                }
+            )
+        }.handleEvents(receiveCancel: {
+            job?.cancel(cause: nil)
+        })
+    }
+    .eraseToAnyPublisher()
+}
+
 func createOptionalFuture<T, E>(suspendWrapper: NullableSuspendWrapper<T>) -> AnyPublisher<T?, E> where E: Error {
     Deferred<Publishers.HandleEvents<Future<T?, E>>> {
         var job: Kotlinx_coroutines_coreJob?

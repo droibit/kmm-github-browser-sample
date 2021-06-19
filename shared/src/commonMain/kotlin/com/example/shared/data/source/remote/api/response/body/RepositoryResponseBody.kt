@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RepositoryResponseBody(
-    val id: Int,
+    val id: Long,
     val name: String,
     val description: String?,
     @SerialName("stargazers_count") val stargazersCount: Int,
@@ -17,7 +17,7 @@ data class RepositoryResponseBody(
 @Serializable
 data class RepositoryOwnerResponseBody(
     val login: String,
-    val id: Int,
+    val id: Long,
     @SerialName("html_url") val url: String,
     @SerialName("avatar_url") val avatarUrl: String,
 )
