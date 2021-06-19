@@ -9,7 +9,7 @@ CREATE TABLE repoSearchResult (
 
 insert:
 INSERT OR REPLACE INTO repoSearchResult (query, repoIds, totalCount, next)
-VALUES (?,?,?,?);
+VALUES ?;
 
 search:
 SELECT * FROM repoSearchResult WHERE query = ?;

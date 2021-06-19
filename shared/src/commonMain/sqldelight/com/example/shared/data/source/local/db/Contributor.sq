@@ -5,12 +5,12 @@ CREATE TABLE contributor (
     contributions INTEGER NOT NULL,
     avatarUrl TEXT,
     PRIMARY KEY(repoName, repoOwner, login),
-    FOREIGN KEY(repoName, repoOwner) REFERENCES repo(name, owner_login) ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED
+    FOREIGN KEY(repoName, repoOwner) REFERENCES repo(name, ownerLogin) ON UPDATE CASCADE ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED
 );
 
 insert:
 INSERT OR REPLACE INTO contributor (repoName, repoOwner, login, contributions, avatarUrl)
-VALUES (?,?,?,?,?);
+VALUES ?;
 
 loadContributors:
 SELECT login, avatarUrl, repoName, repoOwner, contributions

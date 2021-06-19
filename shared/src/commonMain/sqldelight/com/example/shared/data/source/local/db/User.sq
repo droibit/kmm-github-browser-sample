@@ -10,7 +10,7 @@ CREATE TABLE user (
 
 insert:
 INSERT OR REPLACE INTO user (login, avatarUrl, name, company, reposUrl, blog)
-VALUES (?,?,?,?,?,?);
+VALUES ?;
 
 findByLogin:
 SELECT * FROM user WHERE login = ?;

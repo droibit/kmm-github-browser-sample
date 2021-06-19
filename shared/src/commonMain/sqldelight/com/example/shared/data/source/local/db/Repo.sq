@@ -1,27 +1,29 @@
+
+
 CREATE TABLE repo (
     id INTEGER NOT NULL,
     name TEXT NOT NULL,
     fullName TEXT NOT NULL,
     description TEXT,
     stars INTEGER NOT NULL,
-    owner_login TEXT NOT NULL,
-    owner_url TEXT,
-    PRIMARY KEY(name, owner_login)
+    ownerLogin TEXT NOT NULL,
+    ownerUrl TEXT,
+    PRIMARY KEY(name, ownerLogin)
 );
 
 createRepoIfNotExists:
-INSERT OR IGNORE INTO repo (id, name, fullName, description, stars, owner_login, owner_url)
+INSERT OR IGNORE INTO repo (id, name, fullName, description, stars, ownerLogin, ownerUrl)
  VALUES (?,?,?,?,?,?,?);
 
 insert:
-INSERT OR REPLACE INTO repo (id, name, fullName, description, stars, owner_login, owner_url)
-VALUES (?,?,?,?,?,?,?);
+INSERT OR REPLACE INTO repo (id, name, fullName, description, stars, ownerLogin, ownerUrl)
+VALUES ?;
 
 loadRepo:
-SELECT * FROM repo WHERE owner_login = ? AND name = ?;
+SELECT * FROM repo WHERE ownerLogin = ? AND name = ?;
 
 loadRepositories:
-SELECT * FROM repo WHERE owner_login = ? ORDER BY stars DESC;
+SELECT * FROM repo WHERE ownerLogin = ? ORDER BY stars DESC;
 
 loadById:
 SELECT * FROM repo WHERE id IN ?;

@@ -38,14 +38,7 @@ class UserRepository @Inject constructor(
                 body.reposUrl,
                 body.blogUrl
             ).also {
-                appDatabase.userQueries.insert(
-                    it.login,
-                    it.avatarUrl,
-                    it.name,
-                    it.company,
-                    it.reposUrl,
-                    it.blog
-                )
+                appDatabase.userQueries.insert(it)
             }
         } catch (e: GitHubApiError) {
             Komol.e(e)
