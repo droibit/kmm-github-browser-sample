@@ -5,11 +5,14 @@ import com.chrynan.inject.Singleton
 import com.example.shared.data.source.local.db.AppDatabase
 import com.example.shared.data.source.local.db.Contributor
 import com.example.shared.data.source.local.db.Repo
+import com.example.shared.data.source.local.db.RepoSearchResult
 import com.example.shared.data.source.remote.api.GitHubApiError
 import com.example.shared.data.source.remote.api.GitHubService
 import com.example.shared.data.source.remote.api.response.body.ContributorResponseBody
 import com.example.shared.data.source.remote.api.response.body.RepositoryResponseBody
+import com.example.shared.data.source.remote.api.response.header.GitHubPageLinks
 import com.example.shared.model.GitHubError
+import com.example.shared.model.PagedRepoSearchResult
 import com.example.shared.utils.DefaultDispatcher
 import com.github.droibit.komol.Komol
 import kotlinx.coroutines.CoroutineDispatcher
@@ -99,6 +102,55 @@ class RepoRepository @Inject constructor(
                         }
                     }
                 }
+            } catch (e: GitHubApiError) {
+                Komol.e(e)
+                throw GitHubError(e)
+            }
+        }
+
+    suspend fun search(query: String, page: Int? = null): PagedRepoSearchResult =
+        withContext(defaultDispatcher) {
+            val repoSearchResult = appDatabase.repoSearchResultQueries.search(query)
+                .executeAsOneOrNull()
+                .also {
+                    Komol.d("RepoSearchResult: ${it?.toString() ?: "null"}")
+                }
+
+            if (repoSearchResult != null && page == null) {
+                val order = repoSearchResult.repoIds
+                    .mapIndexed { index, id -> id to index }
+                    .toMap()
+
+                val repos = appDatabase.repoQueries.loadByIds(repoSearchResult.repoIds)
+                    .executeAsList()
+                    .sortedWith(compareBy { order[it.id] })
+                return@withContext PagedRepoSearchResult(
+                    repos, repoSearchResult.next?.toInt()
+                )
+            }
+
+            try {
+                val response = gitHubService.searchRepos(query, page)
+                val body = response.body ?: return@withContext PagedRepoSearchResult()
+                val nextPage = GitHubPageLinks(response.headers)?.nextPage
+                val repos: List<Repo> = appDatabase.transactionWithResult {
+                    val mergedRepoIds =
+                        (repoSearchResult?.repoIds?.toMutableList() ?: mutableListOf())
+                            .also { dest ->
+                                dest.addAll(body.items.map { it.id })
+                            }
+                    val newRepoSearchResult = RepoSearchResult(
+                        query = query,
+                        repoIds = mergedRepoIds,
+                        totalCount = body.totalCount.toLong(),
+                        next = nextPage?.toLong()
+                    )
+                    appDatabase.repoSearchResultQueries.insert(newRepoSearchResult)
+
+                    body.items.map { it.toRepo() }
+                        .onEach { appDatabase.repoQueries.insert(it) }
+                }
+                PagedRepoSearchResult(repos, nextPage)
             } catch (e: GitHubApiError) {
                 Komol.e(e)
                 throw GitHubError(e)

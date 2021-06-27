@@ -8,4 +8,6 @@ protocol RepoRepository {
     func loadRepo(owner: String, name: String) -> AnyPublisher<Repo?, GitHubError>
 
     func loadContributors(owner: String, name: String) -> AnyPublisher<[Contributor], GitHubError>
+
+    func search(query: String, page: Int?) -> AnyPublisher<PagedRepoSearchResult, GitHubError>
 }

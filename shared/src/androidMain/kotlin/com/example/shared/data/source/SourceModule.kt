@@ -2,7 +2,7 @@ package com.example.shared.data.source
 
 import android.content.Context
 import com.example.shared.data.source.local.db.AppDatabase
-import com.example.shared.data.source.local.db.ListOfStringsAdapter
+import com.example.shared.data.source.local.db.ListOfLongsAdapter
 import com.example.shared.data.source.local.db.RepoSearchResult
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import dagger.Module
@@ -33,7 +33,7 @@ object SourceModule {
                 name = "github.db"
             ),
             repoSearchResultAdapter = RepoSearchResult.Adapter(
-                repoIdsAdapter = ListOfStringsAdapter
+                repoIdsAdapter = ListOfLongsAdapter
             )
         )
     }

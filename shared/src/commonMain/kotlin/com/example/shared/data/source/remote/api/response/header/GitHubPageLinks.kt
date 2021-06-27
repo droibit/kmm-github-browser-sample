@@ -4,7 +4,7 @@ import io.ktor.http.Headers
 import io.ktor.http.Url
 import kotlin.LazyThreadSafetyMode.NONE
 
-data class GitHubPageLinks(
+internal data class GitHubPageLinks(
     val value: Map<String, String>
 ) {
     val nextPage: Int? by lazy(NONE) {

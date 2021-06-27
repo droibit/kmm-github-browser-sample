@@ -7,7 +7,7 @@ object AppDatabaseProvider {
         return AppDatabase(
             driver = NativeSqliteDriver(AppDatabase.Schema, "github.db"),
             repoSearchResultAdapter = RepoSearchResult.Adapter(
-                repoIdsAdapter = ListOfStringsAdapter
+                repoIdsAdapter = ListOfLongsAdapter
             )
         )
     }

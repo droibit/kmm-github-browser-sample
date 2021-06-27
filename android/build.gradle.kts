@@ -57,4 +57,6 @@ dependencies {
 
     implementation(Deps.Komol.core)
     implementation(Deps.Komol.timber)
+
+    implementation(Deps.Ktor.Client.core)
 }

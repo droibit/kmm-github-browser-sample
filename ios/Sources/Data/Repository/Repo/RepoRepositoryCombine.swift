@@ -27,4 +27,14 @@ class RepoRepositoryCombine: RepoRepository {
             $0 as! [Contributor]
         }
     }
+
+    func search(query: String, page: Int?) -> AnyPublisher<PagedRepoSearchResult, GitHubError> {
+        createFuture(suspendWrapper: delegate.searchWrapper(query: query, page: page?.toKotlinInt()))
+    }
+}
+
+private extension Int {
+    func toKotlinInt() -> KotlinInt {
+        KotlinInt(value: Int32(self))
+    }
 }

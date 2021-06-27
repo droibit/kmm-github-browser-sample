@@ -25,6 +25,9 @@ class RepoRepositoryIos(
     fun loadContributorsWrapper(owner: String, name: String) =
         SuspendWrapper(scope) { repository.loadContributors(owner, name) }
 
+    fun searchWrapper(query: String, page: Int?) =
+        SuspendWrapper(scope) { repository.search(query, page) }
+
     companion object Provider {
         fun get(
             gitHubService: GitHubService,
