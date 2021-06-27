@@ -27,9 +27,9 @@ class UserRepositoryIos(
             val repository = UserRepository(
                 gitHubService,
                 appDatabase,
-                dispatchers
+                dispatchers.default
             )
-            return UserRepositoryIos(repository, dispatchers.io)
+            return UserRepositoryIos(repository, dispatchers.default)
         }
     }
 }

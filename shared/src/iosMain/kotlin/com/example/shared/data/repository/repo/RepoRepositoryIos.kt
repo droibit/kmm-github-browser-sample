@@ -34,9 +34,9 @@ class RepoRepositoryIos(
             val repository = RepoRepository(
                 gitHubService,
                 appDatabase,
-                dispatchers
+                dispatchers.default
             )
-            return RepoRepositoryIos(repository, dispatchers.io)
+            return RepoRepositoryIos(repository, dispatchers.default)
         }
     }
 }

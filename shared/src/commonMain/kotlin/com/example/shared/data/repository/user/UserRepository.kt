@@ -7,9 +7,9 @@ import com.example.shared.data.source.local.db.User
 import com.example.shared.data.source.remote.api.GitHubApiError
 import com.example.shared.data.source.remote.api.GitHubService
 import com.example.shared.model.GitHubError
-import com.example.shared.utils.CoroutinesDispatcherProvider
+import com.example.shared.utils.DefaultDispatcher
 import com.github.droibit.komol.Komol
-import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -17,10 +17,10 @@ import kotlin.coroutines.cancellation.CancellationException
 class UserRepository @Inject constructor(
     private val gitHubService: GitHubService,
     private val appDatabase: AppDatabase,
-    private val dispatcherProvider: CoroutinesDispatcherProvider
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
 ) {
     @Throws(GitHubError::class, CancellationException::class)
-    suspend fun loadUser(login: String): User? = withContext(dispatcherProvider.io) {
+    suspend fun loadUser(login: String): User? = withContext(defaultDispatcher) {
         val user = appDatabase.userQueries.findByLogin(login)
             .executeAsOneOrNull()
         if (user != null) {

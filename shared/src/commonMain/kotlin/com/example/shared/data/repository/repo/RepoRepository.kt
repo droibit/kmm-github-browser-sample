@@ -10,18 +10,19 @@ import com.example.shared.data.source.remote.api.GitHubService
 import com.example.shared.data.source.remote.api.response.body.ContributorResponseBody
 import com.example.shared.data.source.remote.api.response.body.RepositoryResponseBody
 import com.example.shared.model.GitHubError
-import com.example.shared.utils.CoroutinesDispatcherProvider
+import com.example.shared.utils.DefaultDispatcher
 import com.github.droibit.komol.Komol
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 @Singleton
 class RepoRepository @Inject constructor(
     private val gitHubService: GitHubService,
     private val appDatabase: AppDatabase,
-    private val dispatcherProvider: CoroutinesDispatcherProvider
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
 ) {
     suspend fun loadRepos(owner: String, force: Boolean): List<Repo> =
-        withContext(dispatcherProvider.io) {
+        withContext(defaultDispatcher) {
             val repos = appDatabase.repoQueries.loadRepositories(owner)
                 .executeAsList()
             if (!force && repos.isNotEmpty()) {
@@ -45,7 +46,7 @@ class RepoRepository @Inject constructor(
             }
         }
 
-    suspend fun loadRepo(owner: String, name: String): Repo? = withContext(dispatcherProvider.io) {
+    suspend fun loadRepo(owner: String, name: String): Repo? = withContext(defaultDispatcher) {
         val repo = appDatabase.repoQueries.loadRepo(owner, name)
             .executeAsOneOrNull()
         if (repo != null) {
@@ -66,7 +67,7 @@ class RepoRepository @Inject constructor(
     }
 
     suspend fun loadContributors(owner: String, name: String): List<Contributor> =
-        withContext(dispatcherProvider.io) {
+        withContext(defaultDispatcher) {
             val contributors = appDatabase.contributorQueries.loadContributors(owner, name)
                 .executeAsList()
             if (contributors.isNotEmpty()) {
