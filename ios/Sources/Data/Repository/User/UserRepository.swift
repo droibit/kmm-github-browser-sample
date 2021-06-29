@@ -3,5 +3,5 @@ import Foundation
 import Shared
 
 protocol UserRepository {
-    func loadUserWrapper(login: String) -> AnyPublisher<User?, GitHubError>
+    func loadUser(login: String) -> AnyPublisher<User?, GitHubError>
 }

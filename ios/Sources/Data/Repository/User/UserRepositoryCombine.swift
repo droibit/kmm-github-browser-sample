@@ -11,7 +11,7 @@ class UserRepositoryCombine: UserRepository {
         self.delegate = delegate
     }
 
-    func loadUserWrapper(login: String) -> AnyPublisher<User?, GitHubError> {
+    func loadUser(login: String) -> AnyPublisher<User?, GitHubError> {
         createOptionalFuture(suspendWrapper: delegate.loadUserWrapper(login: login))
     }
 }
