@@ -9,7 +9,7 @@ struct SampleApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ContentView()
+                SearchView()
                     .navigationBarTitle(Text("GitHub Browser"), displayMode: .inline)
             }
         }
