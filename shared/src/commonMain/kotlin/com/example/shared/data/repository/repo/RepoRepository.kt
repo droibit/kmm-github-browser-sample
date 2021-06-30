@@ -1,6 +1,7 @@
 package com.example.shared.data.repository.repo
 
 import com.chrynan.inject.Inject
+import com.chrynan.inject.Named
 import com.chrynan.inject.Singleton
 import com.example.shared.data.source.local.db.AppDatabase
 import com.example.shared.data.source.local.db.Contributor
@@ -13,7 +14,6 @@ import com.example.shared.data.source.remote.api.response.body.RepositoryRespons
 import com.example.shared.data.source.remote.api.response.header.GitHubPageLinks
 import com.example.shared.model.GitHubError
 import com.example.shared.model.PagedRepoSearchResult
-import com.example.shared.utils.DefaultDispatcher
 import com.github.droibit.komol.Komol
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -22,7 +22,7 @@ import kotlinx.coroutines.withContext
 class RepoRepository @Inject constructor(
     private val gitHubService: GitHubService,
     private val appDatabase: AppDatabase,
-    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
+    @Named("default") private val defaultDispatcher: CoroutineDispatcher
 ) {
     suspend fun loadRepos(owner: String, force: Boolean): List<Repo> =
         withContext(defaultDispatcher) {

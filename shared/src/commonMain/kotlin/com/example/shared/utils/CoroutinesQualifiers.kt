@@ -2,6 +2,8 @@ package com.example.shared.utils
 
 import com.chrynan.inject.Qualifier
 
+// TODO: Avoid NonExistentClass
+
 @Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class DefaultDispatcher

@@ -8,7 +8,10 @@ struct SampleApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                ContentView()
+                    .navigationBarTitle(Text("GitHub Browser"), displayMode: .inline)
+            }
         }
     }
 }

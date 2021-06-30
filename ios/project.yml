@@ -4,7 +4,6 @@ options:
   deploymentTarget:
     iOS:  "14.0"
   developmentLanguage: en
-  postGenCommand: rbenv exec bundle exec pod install  
 
 settings:
   base:
@@ -30,12 +29,16 @@ targets:
         CURRENT_PROJECT_VERSION: 1
         ENABLE_PREVIEWS: true
         DEVELOPMENT_ASSET_PATHS: "\"Sources/Resources/Preview Content\""
-        OTHER_LDFLAGS: $(inherited) $(OTHER_LDFLAGS) -lsqlite3        
     sources:
       - path: Sources
     dependencies:
       - package: CombineSchedulers
       - package: Resolver
+      - framework: $SRCROOT/../shared/build/xcode-frameworks/Shared.framework
+        embed: true
+    preBuildScripts:
+      - name: Pack for Xcode
+        script:  ./scripts/packforxcode.sh        
     postCompileScripts:
       - name: Run SwiftFormat
         script: ./scripts/swiftformat.sh

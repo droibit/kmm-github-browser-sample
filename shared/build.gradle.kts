@@ -1,6 +1,7 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
     kotlin("kapt")
     id("com.android.library")
     id("kotlinx-serialization")
@@ -34,17 +35,19 @@ android {
 
 kotlin {
     android()
-    ios()
 
-    cocoapods {
-        // Configure fields required by CocoaPods.
-        summary = "Shared module for the app."
-        homepage = "https://github.com/droibit/kmm-github-browser-sample"
-        authors = "Shinya Kumagai"
-        license = "Apache License, Version 2.0"
-        frameworkName = "Shared"
+    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
+        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
+            ::iosArm64
+        else
+            ::iosX64
 
-        ios.deploymentTarget = "14.0"
+    iosTarget("ios") {
+        binaries {
+            framework {
+                baseName = "Shared"
+            }
+        }
     }
 
     sourceSets {
@@ -54,11 +57,11 @@ kotlin {
                 implementation(Deps.Stately.common)
                 implementation(Deps.Serialization.core)
                 implementation(Deps.Serialization.json)
-                implementation(Deps.Ktor.Client.core)
+                api(Deps.Ktor.Client.core)
                 implementation(Deps.Ktor.Client.serialization)
                 implementation(Deps.SQLDelight.runtime)
                 implementation(Deps.SQLDelight.coroutines)
-                implementation(Deps.inject)
+                api(Deps.inject)
                 implementation(Deps.Komol.core)
             }
         }
@@ -77,11 +80,6 @@ kotlin {
                 implementation(Deps.SQLDelight.Driver.android)
 
                 implementation(Deps.Dagger.hilt)
-                configurations.getByName("kapt").dependencies.add(
-                    org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
-                        "com.google.dagger", "hilt-android-compiler", Deps.Dagger.version
-                    )
-                )
             }
         }
         val androidTest by getting {
@@ -100,12 +98,15 @@ kotlin {
     }
 }
 
+dependencies {
+    "kapt"(Deps.Dagger.compiler)
+}
+
 sqldelight {
     database("AppDatabase") {
         packageName = "com.example.shared.data.source.local.db"
         schemaOutputDirectory = File(projectDir, "schemas")
     }
-
     linkSqlite = true
 }
 
@@ -115,3 +116,18 @@ kapt {
         arg("dagger.experimentalDaggerErrorMessages", "enabled")
     }
 }
+
+val packForXcode by tasks.creating(Sync::class) {
+    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
+    val framework = kotlin.targets.getByName<KotlinNativeTarget>("ios").binaries.getFramework(mode)
+    val targetDir = File(buildDir, "xcode-frameworks")
+
+    group = "build"
+    dependsOn(framework.linkTask)
+    inputs.property("mode", mode)
+
+    from({ framework.outputDirectory })
+    into(targetDir)
+}
+
+tasks.getByName("build").dependsOn(packForXcode)

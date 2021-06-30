@@ -1,6 +1,7 @@
 package com.example.shared.data.repository.user
 
 import com.chrynan.inject.Inject
+import com.chrynan.inject.Named
 import com.chrynan.inject.Singleton
 import com.example.shared.data.source.local.db.AppDatabase
 import com.example.shared.data.source.local.db.User
@@ -17,7 +18,7 @@ import kotlin.coroutines.cancellation.CancellationException
 class UserRepository @Inject constructor(
     private val gitHubService: GitHubService,
     private val appDatabase: AppDatabase,
-    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
+    @Named("default") private val defaultDispatcher: CoroutineDispatcher
 ) {
     @Throws(GitHubError::class, CancellationException::class)
     suspend fun loadUser(login: String): User? = withContext(defaultDispatcher) {

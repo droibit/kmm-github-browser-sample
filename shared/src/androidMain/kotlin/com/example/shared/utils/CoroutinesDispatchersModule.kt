@@ -1,5 +1,6 @@
 package com.example.shared.utils
 
+import javax.inject.Named
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,19 +12,19 @@ import kotlinx.coroutines.Dispatchers
 @Module
 object CoroutinesDispatchersModule {
 
-    @DefaultDispatcher
+    @Named("default")
     @Provides
     fun providesDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
-    @IoDispatcher
+    @Named("io")
     @Provides
     fun providesIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 
-    @MainDispatcher
+    @Named("main")
     @Provides
     fun providesMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
 
-    @MainImmediateDispatcher
+    @Named("mainImmediate")
     @Provides
     fun providesMainImmediateDispatcher(): CoroutineDispatcher = Dispatchers.Main.immediate
 }
