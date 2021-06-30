@@ -54,17 +54,15 @@ struct RepoListView_Previews: PreviewProvider {
                 ownerUrl: ""
             ),
         ]
-        
 
         RepoListView(repos: repos)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(UIColor.systemBackground))
+            .previewLayout(.sizeThatFits)
             .environment(\.colorScheme, .light)
 
         RepoListView(repos: repos)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(UIColor.systemBackground))
-            .previewDevice("iPhone 12")
+            .previewLayout(.sizeThatFits)
             .environment(\.colorScheme, .dark)
     }
 }
