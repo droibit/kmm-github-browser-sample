@@ -15,7 +15,13 @@ packages:
     version: 0.5.0
   Resolver:
     url: https://github.com/hmlongco/Resolver
-    version: 1.4.3  
+    version: 1.4.3
+  # Nuke:
+  #   url: https://github.com/kean/Nuke
+  #   version: 10.3.0
+  NukeUI:
+    url: https://github.com/kean/NukeUI
+    version: 0.6.2    
 
 targets:
   GitHubBrowserSample:
@@ -34,6 +40,9 @@ targets:
     dependencies:
       - package: CombineSchedulers
       - package: Resolver
+      - package: NukeUI
+      - package: NukeUI
+        product: Nuke
       - framework: $SRCROOT/../shared/build/xcode-frameworks/Shared.framework
         embed: true
     preBuildScripts:
