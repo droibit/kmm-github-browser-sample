@@ -2,15 +2,32 @@ import Shared
 import SwiftUI
 
 struct RepoListView: View {
-    let repos: [Repo]
+    private let repos: [Repo]
+
+    private let onLastItemAppear: () -> Void
+
+    init(repos: [Repo], onLastItemAppear: @escaping () -> Void) {
+        self.repos = repos
+        self.onLastItemAppear = onLastItemAppear
+    }
 
     var body: some View {
-        List {
-            ForEach(repos) { repo in
-                RepoItemView(repo: repo)
+        if repos.isEmpty {
+            EmptyView()
+        } else {
+            List {
+                ForEach(repos) { repo in
+                    RepoItemView(repo: repo)
+                        .onAppear {
+                            if repo === repos.last {
+                                onLastItemAppear()
+                            }
+                        }
+                }
             }
+            .listStyle(PlainListStyle())
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .listStyle(PlainListStyle())
     }
 }
 
@@ -55,12 +72,12 @@ struct RepoListView_Previews: PreviewProvider {
             ),
         ]
 
-        RepoListView(repos: repos)
+        RepoListView(repos: repos) {}
             .background(Color(UIColor.systemBackground))
             .previewLayout(.sizeThatFits)
             .environment(\.colorScheme, .light)
 
-        RepoListView(repos: repos)
+        RepoListView(repos: repos) {}
             .background(Color(UIColor.systemBackground))
             .previewLayout(.sizeThatFits)
             .environment(\.colorScheme, .dark)

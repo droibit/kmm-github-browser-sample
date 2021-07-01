@@ -19,7 +19,7 @@ struct SearchView: View {
                     ownerLogin: "",
                     ownerUrl: ""
                 ),
-            ])
+            ]) {}
         }
     }
 }
