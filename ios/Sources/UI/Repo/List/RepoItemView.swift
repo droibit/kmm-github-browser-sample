@@ -24,7 +24,6 @@ struct RepoItemView: View {
                     .font(.body)
             }
         }
-        .padding(.horizontal)
         .padding(.vertical, 8)
         .frame(minHeight: 48)
     }

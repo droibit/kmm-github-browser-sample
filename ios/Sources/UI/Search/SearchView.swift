@@ -21,6 +21,7 @@ struct SearchView: View {
                 ),
             ]) {}
         }
+        .navigationBarTitle(Text("GitHub Browser"), displayMode: .inline)
     }
 }
 
