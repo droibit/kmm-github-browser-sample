@@ -15,8 +15,8 @@ struct RepoListView: View {
         if repos.isEmpty {
             EmptyView()
         } else {
-            List {
-                ForEach(repos) { repo in
+            List(repos) { repo in
+                NavigationLink(destination: RepoView(repo: repo)) {
                     RepoItemView(repo: repo)
                         .onAppear {
                             if repo === repos.last {
