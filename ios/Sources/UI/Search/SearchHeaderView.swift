@@ -3,9 +3,12 @@ import SwiftUI
 struct SearchHeaderView: View {
     private let onSubmitQuery: (String) -> Void
 
+    private let disabled: Bool
+
     @State private var query: String = ""
 
-    init(onSubmitQuery: @escaping (String) -> Void) {
+    init(disabled: Bool, onSubmitQuery: @escaping (String) -> Void) {
+        self.disabled = disabled
         self.onSubmitQuery = onSubmitQuery
     }
 
@@ -13,6 +16,7 @@ struct SearchHeaderView: View {
         TextField("Search repositories", text: $query, onCommit: {
             self.onSubmitQuery(query)
         })
+            .disabled(disabled)
             .textFieldStyle(PlainTextFieldStyle())
             .textContentType(.none)
             .autocapitalization(.none)
@@ -25,13 +29,13 @@ struct SearchHeaderView: View {
 
 struct SearchHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchHeaderView { _ in
+        SearchHeaderView(disabled: false) { _ in
         }
         .background(Color(UIColor.systemBackground))
         .previewLayout(.sizeThatFits)
         .environment(\.colorScheme, .light)
 
-        SearchHeaderView { _ in
+        SearchHeaderView(disabled: true) { _ in
         }
         .background(Color(UIColor.systemBackground))
         .previewLayout(.sizeThatFits)

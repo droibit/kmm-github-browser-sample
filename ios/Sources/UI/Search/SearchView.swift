@@ -4,7 +4,7 @@ import SwiftUI
 struct SearchView: View {
     var body: some View {
         VStack(spacing: 8) {
-            SearchHeaderView { query in
+            SearchHeaderView(disabled: false) { query in
                 Komol.d("Submit: \(query)")
             }
             .padding()
