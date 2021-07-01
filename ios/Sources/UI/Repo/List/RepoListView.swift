@@ -1,13 +1,18 @@
+// swiftlint:disable function_default_parameter_at_end
+
 import Shared
 import SwiftUI
 
 struct RepoListView: View {
     private let repos: [Repo]
 
+    private let header: String
+
     private let onLastItemAppear: () -> Void
 
-    init(repos: [Repo], onLastItemAppear: @escaping () -> Void) {
+    init(header: String = "", repos: [Repo], onLastItemAppear: @escaping () -> Void = {}) {
         self.repos = repos
+        self.header = header
         self.onLastItemAppear = onLastItemAppear
     }
 
@@ -15,18 +20,25 @@ struct RepoListView: View {
         if repos.isEmpty {
             EmptyView()
         } else {
-            List(repos) { repo in
-                NavigationLink(destination: RepoView(repo: repo)) {
-                    RepoItemView(repo: repo)
-                        .onAppear {
-                            if repo === repos.last {
-                                onLastItemAppear()
-                            }
-                        }
+            VStack(alignment: .leading, spacing: 0) {
+                if !header.isEmpty {
+                    Text(header)
+                        .font(.headline.weight(.regular))
+                        .padding(.horizontal)
                 }
+                List(repos) { repo in
+                    NavigationLink(destination: RepoView(repo: repo)) {
+                        RepoItemView(repo: repo)
+                            .onAppear {
+                                if repo === repos.last {
+                                    onLastItemAppear()
+                                }
+                            }
+                    }
+                }
+                .listStyle(PlainListStyle())
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .listStyle(PlainListStyle())
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 }
@@ -72,12 +84,12 @@ struct RepoListView_Previews: PreviewProvider {
             ),
         ]
 
-        RepoListView(repos: repos) {}
+        RepoListView(repos: repos)
             .background(Color(UIColor.systemBackground))
             .previewLayout(.sizeThatFits)
             .environment(\.colorScheme, .light)
 
-        RepoListView(repos: repos) {}
+        RepoListView(header: "Repositories", repos: repos) {}
             .background(Color(UIColor.systemBackground))
             .previewLayout(.sizeThatFits)
             .environment(\.colorScheme, .dark)

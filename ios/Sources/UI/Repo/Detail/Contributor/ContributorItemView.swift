@@ -8,17 +8,21 @@ struct ContributorItemView: View {
 
     var body: some View {
         HStack(spacing: 8) {
+            let iconSize: CGFloat = 32
             LazyImage(source: contributor.avatarUrl) { state in
                 if let image = state.image {
                     image
                 } else {
                     SwiftUI.Image(systemName: "person.crop.circle.fill")
+                        .resizable()
+                        .frame(width: iconSize, height: iconSize)
+                        .scaledToFit()
                 }
             }
-            .processors([ImageProcessors.Resize(width: 32)])
+            .processors([ImageProcessors.Resize(width: iconSize)])
             .clipShape(Circle())
             .overlay(Circle().stroke(Color.secondary.opacity(0.25), lineWidth: 1))
-            .frame(width: 32, height: 32)
+            .frame(width: iconSize, height: iconSize)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(contributor.login)

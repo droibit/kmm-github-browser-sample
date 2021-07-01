@@ -8,9 +8,9 @@ struct ContributorListView: View {
         if contributors.isEmpty {
             EmptyView()
         } else {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 0) {
                 Text("Contributors")
-                    .font(.headline)
+                    .font(.headline.weight(.regular))
                     .padding(.horizontal)
                 List(contributors) { contributor in
                     NavigationLink(destination: UserView(login: contributor.login)) {
