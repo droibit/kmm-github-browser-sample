@@ -13,7 +13,9 @@ struct ContributorListView: View {
                     .font(.headline)
                     .padding(.horizontal)
                 List(contributors) { contributor in
-                    ContributorItemView(contributor: contributor)
+                    NavigationLink(destination: UserView(login: contributor.login)) {
+                        ContributorItemView(contributor: contributor)
+                    }
                 }
                 .listStyle(PlainListStyle())
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
