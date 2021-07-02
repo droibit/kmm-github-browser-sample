@@ -6,6 +6,10 @@ struct SearchResultUiModel {
     let searchResult: PagedRepoSearchResult?
     let error: String?
 
+    var hasNoState: Bool {
+        !inProgress && searchResult == nil
+    }
+
     var firstInProgress: Bool {
         inProgress && searchResult == nil
     }

@@ -8,7 +8,7 @@ class SearchViewModel: ObservableObject {
 
     private let mainScheduler: AnySchedulerOf<DispatchQueue>
 
-    private var mergedPagedRepoSearchResult: PagedRepoSearchResult?
+    private var lastQuery: String
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -19,38 +19,70 @@ class SearchViewModel: ObservableObject {
     init(repoRepository: RepoRepository,
          mainScheduler: AnySchedulerOf<DispatchQueue>,
          query: String = "",
+         lastQuery: String = "",
          searchResultUiModel: SearchResultUiModel = .init())
     {
         self.repoRepository = repoRepository
         self.mainScheduler = mainScheduler
         self.query = query
+        self.lastQuery = lastQuery
         self.searchResultUiModel = searchResultUiModel
     }
 
+    func searchWithNewQuery() {
+        guard query != lastQuery else {
+            return
+        }
+        search()
+    }
+
     func search() {
-        guard !searchResultUiModel.inProgress else { return }
+        let query = self.query.lowercased().trimmingCharacters(in: .whitespaces)
         guard !query.isEmpty else {
-            searchResultUiModel = SearchResultUiModel(searchResult: PagedRepoSearchResult())
+            lastQuery = query
+            searchResultUiModel = SearchResultUiModel()
+            return
+        }
+        guard !searchResultUiModel.inProgress else {
             return
         }
 
-        let searchResult = searchResultUiModel.searchResult
-        searchResultUiModel = SearchResultUiModel(inProgress: true, searchResult: searchResult)
+        let mayPaging = query == lastQuery
+        let currentSearchResult: PagedRepoSearchResult?
+        if mayPaging {
+            guard let searchResult = searchResultUiModel.searchResult,
+                  searchResult.nextPage != nil
+            else {
+                return
+            }
+            currentSearchResult = searchResult
+        } else {
+            currentSearchResult = nil
+        }
+        searchResultUiModel = SearchResultUiModel(inProgress: true, searchResult: currentSearchResult)
 
-        let page: Int? = searchResult?.nextPage?.intValue
+        let page: Int? = currentSearchResult?.nextPage?.intValue
+        Komol.d("query=\(query), page=\(String(describing: page))")
         repoRepository.search(query: query, page: page)
-            .subscribe(on: mainScheduler)
+            .receive(on: mainScheduler)
             .sink { [weak self] completion in
                 if case let .failure(error) = completion {
                     self?.searchResultUiModel = SearchResultUiModel(
-                        searchResult: searchResult,
+                        searchResult: currentSearchResult,
                         error: error.localizedDescription
                     )
                 }
             } receiveValue: { [weak self] newSearchResult in
-                self?.searchResultUiModel = SearchResultUiModel(
-                    searchResult: newSearchResult.merge(existingRepos: searchResult?.repos ?? [])
-                )
+                guard let self = self else { return }
+                defer { self.lastQuery = query }
+                if mayPaging {
+                    let currentRepos = currentSearchResult?.repos ?? []
+                    self.searchResultUiModel = SearchResultUiModel(
+                        searchResult: newSearchResult.merge(existingRepos: currentRepos)
+                    )
+                } else {
+                    self.searchResultUiModel = SearchResultUiModel(searchResult: newSearchResult)
+                }
             }.store(in: &cancellables)
     }
 }
