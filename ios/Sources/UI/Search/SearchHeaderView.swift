@@ -1,20 +1,21 @@
 import SwiftUI
 
 struct SearchHeaderView: View {
-    private let onSubmitQuery: (String) -> Void
+    private let onSubmitQuery: () -> Void
 
     private let disabled: Bool
 
-    @State private var query: String = ""
+    private var query: Binding<String>
 
-    init(disabled: Bool, onSubmitQuery: @escaping (String) -> Void) {
+    init(query: Binding<String>, disabled: Bool, onSubmitQuery: @escaping () -> Void) {
+        self.query = query
         self.disabled = disabled
         self.onSubmitQuery = onSubmitQuery
     }
 
     var body: some View {
-        TextField("Search repositories", text: $query, onCommit: {
-            self.onSubmitQuery(query)
+        TextField("Search repositories", text: query, onCommit: {
+            self.onSubmitQuery()
         })
             .disabled(disabled)
             .textFieldStyle(PlainTextFieldStyle())
@@ -28,17 +29,23 @@ struct SearchHeaderView: View {
 }
 
 struct SearchHeaderView_Previews: PreviewProvider {
+    struct QueryContainer: View {
+        @State private var query: String = ""
+
+        var body: some View {
+            SearchHeaderView(query: $query, disabled: false) {}
+        }
+    }
+
     static var previews: some View {
         Group {
-            SearchHeaderView(disabled: false) { _ in
-            }
-            .background(Color(UIColor.systemBackground))
-            .preferredColorScheme(.light)
+            QueryContainer()
+                .background(Color(UIColor.systemBackground))
+                .preferredColorScheme(.light)
 
-            SearchHeaderView(disabled: true) { _ in
-            }
-            .background(Color(UIColor.systemBackground))
-            .preferredColorScheme(.dark)
+            QueryContainer()
+                .background(Color(UIColor.systemBackground))
+                .preferredColorScheme(.dark)
         }
         .previewLayout(.sizeThatFits)
     }

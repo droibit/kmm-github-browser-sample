@@ -8,11 +8,18 @@ struct RepoListView: View {
 
     private let header: String
 
+    private var showsFooterProress: Bool
+
     private let onLastItemAppear: () -> Void
 
-    init(header: String = "", repos: [Repo], onLastItemAppear: @escaping () -> Void = {}) {
-        self.repos = repos
+    init(header: String = "",
+         repos: [Repo],
+         showsFooterProress: Bool = false,
+         onLastItemAppear: @escaping () -> Void = {})
+    {
         self.header = header
+        self.repos = repos
+        self.showsFooterProress = showsFooterProress
         self.onLastItemAppear = onLastItemAppear
     }
 
@@ -26,14 +33,24 @@ struct RepoListView: View {
                         .font(.headline.weight(.regular))
                         .padding(.horizontal)
                 }
-                List(repos) { repo in
-                    NavigationLink(destination: RepoView(repo: repo)) {
-                        RepoItemView(repo: repo)
-                            .onAppear {
-                                if repo === repos.last {
-                                    onLastItemAppear()
+                List {
+                    ForEach(repos) { repo in
+                        NavigationLink(destination: RepoView(repo: repo)) {
+                            RepoItemView(repo: repo)
+                                .onAppear {
+                                    if repo === repos.last {
+                                        onLastItemAppear()
+                                    }
                                 }
-                            }
+                        }
+                    }
+
+                    if showsFooterProress {
+                        VStack(alignment: .center) {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .secondary))
+                                .padding(8)
+                        }.frame(maxWidth: .infinity)
                     }
                 }
                 .listStyle(PlainListStyle())
@@ -85,11 +102,11 @@ struct RepoListView_Previews: PreviewProvider {
         ]
 
         Group {
-            RepoListView(repos: repos)
+            RepoListView(repos: repos, showsFooterProress: false)
                 .background(Color(UIColor.systemBackground))
                 .environment(\.colorScheme, .light)
 
-            RepoListView(header: "Repositories", repos: repos) {}
+            RepoListView(header: "Repositories", repos: repos, showsFooterProress: true)
                 .background(Color(UIColor.systemBackground))
                 .environment(\.colorScheme, .dark)
         }

@@ -32,9 +32,3 @@ class RepoRepositoryCombine: RepoRepository {
         createFuture(suspendWrapper: delegate.searchWrapper(query: query, page: page?.toKotlinInt()))
     }
 }
-
-private extension Int {
-    func toKotlinInt() -> KotlinInt {
-        KotlinInt(value: Int32(self))
-    }
-}
