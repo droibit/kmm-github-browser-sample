@@ -15,14 +15,15 @@ struct InProgressView: View {
 
 struct InProgressView_Previews: PreviewProvider {
     static var previews: some View {
-        InProgressView()
-            .background(Color(UIColor.systemBackground))
-            .previewLayout(.sizeThatFits)
-            .environment(\.colorScheme, .light)
+        Group {
+            InProgressView()
+                .background(Color(UIColor.systemBackground))
+                .preferredColorScheme(.light)
 
-        InProgressView()
-            .background(Color(UIColor.systemBackground))
-            .previewLayout(.sizeThatFits)
-            .environment(\.colorScheme, .dark)
+            InProgressView()
+                .background(Color(UIColor.systemBackground))
+                .preferredColorScheme(.dark)
+        }
+        .previewLayout(.sizeThatFits)
     }
 }

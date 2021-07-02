@@ -34,36 +34,36 @@ struct RepoView: View {
 
 struct RepoView_Previews: PreviewProvider {
     static var previews: some View {
-        RepoView(
-            repo: Repo(
-                id: 1,
-                name: "kmm-github-browser-sample",
-                fullName: "droibit/kmm-github-browser-sample",
-                description: "Github Browser sample using Kotlin Multiplatform Mobile.",
-                stars: 0,
-                ownerLogin: "droibit",
-                ownerUrl: ""
+        Group {
+            RepoView(
+                repo: Repo(
+                    id: 1,
+                    name: "kmm-github-browser-sample",
+                    fullName: "droibit/kmm-github-browser-sample",
+                    description: "Github Browser sample using Kotlin Multiplatform Mobile.",
+                    stars: 0,
+                    ownerLogin: "droibit",
+                    ownerUrl: ""
+                )
             )
-        )
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(UIColor.systemBackground))
-        .previewDevice("iPhone SE (2nd generation)")
-        .environment(\.colorScheme, .light)
+            .background(Color(UIColor.systemBackground))
+            .previewDevice("iPhone SE (2nd generation)")
+            .preferredColorScheme(.light)
 
-        RepoView(
-            repo: Repo(
-                id: 1,
-                name: "kmm-github-browser-sample",
-                fullName: "droibit/kmm-github-browser-sample",
-                description: nil,
-                stars: 0,
-                ownerLogin: "droibit",
-                ownerUrl: ""
+            RepoView(
+                repo: Repo(
+                    id: 1,
+                    name: "kmm-github-browser-sample",
+                    fullName: "droibit/kmm-github-browser-sample",
+                    description: nil,
+                    stars: 0,
+                    ownerLogin: "droibit",
+                    ownerUrl: ""
+                )
             )
-        )
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(UIColor.systemBackground))
-        .previewDevice("iPhone 12")
-        .environment(\.colorScheme, .dark)
+            .background(Color(UIColor.systemBackground))
+            .previewDevice("iPhone 12")
+            .preferredColorScheme(.dark)
+        }
     }
 }

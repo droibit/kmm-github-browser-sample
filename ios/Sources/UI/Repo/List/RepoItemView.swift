@@ -31,34 +31,35 @@ struct RepoItemView: View {
 
 struct RepoItemView_Previews: PreviewProvider {
     static var previews: some View {
-        RepoItemView(
-            repo: Repo(
-                id: 1,
-                name: "kmm-github-browser-sample",
-                fullName: "droibit/kmm-github-browser-sample",
-                description: "Github Browser sample using Kotlin Multiplatform Mobile.",
-                stars: 0,
-                ownerLogin: "",
-                ownerUrl: ""
+        Group {
+            RepoItemView(
+                repo: Repo(
+                    id: 1,
+                    name: "kmm-github-browser-sample",
+                    fullName: "droibit/kmm-github-browser-sample",
+                    description: "Github Browser sample using Kotlin Multiplatform Mobile.",
+                    stars: 0,
+                    ownerLogin: "",
+                    ownerUrl: ""
+                )
             )
-        )
-        .background(Color(UIColor.systemBackground))
-        .previewLayout(.sizeThatFits)
-        .environment(\.colorScheme, .light)
+            .background(Color(UIColor.systemBackground))
+            .preferredColorScheme(.light)
 
-        RepoItemView(
-            repo: Repo(
-                id: 1,
-                name: "hell-kmm",
-                fullName: "droibit/hell-kmm",
-                description: "Hello world app of Kotlin multiplatform mobile.",
-                stars: 999,
-                ownerLogin: "",
-                ownerUrl: ""
+            RepoItemView(
+                repo: Repo(
+                    id: 1,
+                    name: "hell-kmm",
+                    fullName: "droibit/hell-kmm",
+                    description: "Hello world app of Kotlin multiplatform mobile.",
+                    stars: 999,
+                    ownerLogin: "",
+                    ownerUrl: ""
+                )
             )
-        )
-        .background(Color(UIColor.systemBackground))
+            .background(Color(UIColor.systemBackground))
+            .preferredColorScheme(.dark)
+        }
         .previewLayout(.sizeThatFits)
-        .environment(\.colorScheme, .dark)
     }
 }

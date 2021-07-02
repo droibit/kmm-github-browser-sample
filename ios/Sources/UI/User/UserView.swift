@@ -69,16 +69,17 @@ struct UserView: View {
 
 struct UserView_Previews: PreviewProvider {
     static var previews: some View {
-        UserView(login: "droibit")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(UIColor.systemBackground))
-            .previewDevice("iPhone SE (2nd generation)")
-            .environment(\.colorScheme, .light)
+        Group {
+            UserView(login: "droibit")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(UIColor.systemBackground))
+                .preferredColorScheme(.light)
 
-        UserView(login: "droibit")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(UIColor.systemBackground))
-            .previewDevice("iPhone 12")
-            .environment(\.colorScheme, .dark)
+            UserView(login: "droibit")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(UIColor.systemBackground))
+                .previewDevice("iPhone 12")
+                .preferredColorScheme(.dark)
+        }
     }
 }

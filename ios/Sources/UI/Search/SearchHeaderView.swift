@@ -29,16 +29,17 @@ struct SearchHeaderView: View {
 
 struct SearchHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchHeaderView(disabled: false) { _ in
-        }
-        .background(Color(UIColor.systemBackground))
-        .previewLayout(.sizeThatFits)
-        .environment(\.colorScheme, .light)
+        Group {
+            SearchHeaderView(disabled: false) { _ in
+            }
+            .background(Color(UIColor.systemBackground))
+            .preferredColorScheme(.light)
 
-        SearchHeaderView(disabled: true) { _ in
+            SearchHeaderView(disabled: true) { _ in
+            }
+            .background(Color(UIColor.systemBackground))
+            .preferredColorScheme(.dark)
         }
-        .background(Color(UIColor.systemBackground))
         .previewLayout(.sizeThatFits)
-        .environment(\.colorScheme, .dark)
     }
 }

@@ -84,14 +84,15 @@ struct RepoListView_Previews: PreviewProvider {
             ),
         ]
 
-        RepoListView(repos: repos)
-            .background(Color(UIColor.systemBackground))
-            .previewLayout(.sizeThatFits)
-            .environment(\.colorScheme, .light)
+        Group {
+            RepoListView(repos: repos)
+                .background(Color(UIColor.systemBackground))
+                .environment(\.colorScheme, .light)
 
-        RepoListView(header: "Repositories", repos: repos) {}
-            .background(Color(UIColor.systemBackground))
-            .previewLayout(.sizeThatFits)
-            .environment(\.colorScheme, .dark)
+            RepoListView(header: "Repositories", repos: repos) {}
+                .background(Color(UIColor.systemBackground))
+                .environment(\.colorScheme, .dark)
+        }
+        .previewLayout(.sizeThatFits)
     }
 }

@@ -47,14 +47,15 @@ struct ContributorItemView_Previews: PreviewProvider {
             avatarUrl: "https://avatars.githubusercontent.com/u/1456714?v=4"
         )
 
-        ContributorItemView(contributor: contributor)
-            .background(Color(UIColor.systemBackground))
-            .previewLayout(.sizeThatFits)
-            .environment(\.colorScheme, .light)
+        Group {
+            ContributorItemView(contributor: contributor)
+                .background(Color(UIColor.systemBackground))
+                .preferredColorScheme(.light)
 
-        ContributorItemView(contributor: contributor)
-            .background(Color(UIColor.systemBackground))
-            .previewLayout(.sizeThatFits)
-            .environment(\.colorScheme, .dark)
+            ContributorItemView(contributor: contributor)
+                .background(Color(UIColor.systemBackground))
+                .preferredColorScheme(.dark)
+        }
+        .previewLayout(.sizeThatFits)
     }
 }

@@ -12,14 +12,15 @@ struct EmptyView: View {
 
 struct EmptyView_Previews: PreviewProvider {
     static var previews: some View {
-        EmptyView()
-            .background(Color(UIColor.systemBackground))
-            .previewLayout(.sizeThatFits)
-            .environment(\.colorScheme, .light)
+        Group {
+            EmptyView()
+                .background(Color(UIColor.systemBackground))
+                .preferredColorScheme(.light)
 
-        EmptyView()
-            .background(Color(UIColor.systemBackground))
-            .previewLayout(.sizeThatFits)
-            .environment(\.colorScheme, .dark)
+            EmptyView()
+                .background(Color(UIColor.systemBackground))
+                .preferredColorScheme(.dark)
+        }
+        .previewLayout(.sizeThatFits)
     }
 }

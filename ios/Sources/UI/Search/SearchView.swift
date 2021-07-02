@@ -27,16 +27,18 @@ struct SearchView: View {
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(UIColor.systemBackground))
-            .previewDevice("iPhone SE (2nd generation)")
-            .environment(\.colorScheme, .light)
+        Group {
+            SearchView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(UIColor.systemBackground))
+                .previewDevice("iPhone SE (2nd generation)")
+                .preferredColorScheme(.light)
 
-        SearchView()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(UIColor.systemBackground))
-            .previewDevice("iPhone 12")
-            .environment(\.colorScheme, .dark)
+            SearchView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(UIColor.systemBackground))
+                .previewDevice("iPhone 12")
+                .preferredColorScheme(.dark)
+        }
     }
 }

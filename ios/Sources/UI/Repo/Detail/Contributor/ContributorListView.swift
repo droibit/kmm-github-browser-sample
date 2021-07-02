@@ -36,14 +36,15 @@ struct ContributorListView_Previews: PreviewProvider {
             ),
         ]
 
-        ContributorListView(contributors: contributors)
-            .background(Color(UIColor.systemBackground))
-            .previewLayout(.sizeThatFits)
-            .environment(\.colorScheme, .light)
+        Group {
+            ContributorListView(contributors: contributors)
+                .background(Color(UIColor.systemBackground))
+                .preferredColorScheme(.light)
 
-        ContributorListView(contributors: contributors)
-            .background(Color(UIColor.systemBackground))
-            .previewLayout(.sizeThatFits)
-            .environment(\.colorScheme, .dark)
+            ContributorListView(contributors: contributors)
+                .background(Color(UIColor.systemBackground))
+                .preferredColorScheme(.dark)
+        }
+        .previewLayout(.sizeThatFits)
     }
 }
