@@ -7,7 +7,7 @@ struct SearchResultUiModel {
     let error: String?
 
     var hasNoState: Bool {
-        !inProgress && searchResult == nil
+        !inProgress && searchResult == nil && error == nil
     }
 
     var firstInProgress: Bool {

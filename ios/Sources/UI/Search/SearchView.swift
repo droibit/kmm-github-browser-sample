@@ -64,6 +64,14 @@ private struct _SearchView: View {
                 }
             }
 
+            if let error = searchResultUiModel.error,
+               searchResultUiModel.searchResult == nil
+            {
+                RetryView(message: error) {
+                    search(true)
+                }
+            }
+
             if searchResultUiModel.hasNoState {
                 EmptyView()
             }
