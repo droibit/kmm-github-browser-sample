@@ -12,7 +12,7 @@ class SearchViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
 
-    @Published private(set) var searchResultUiModel = SearchResultUiModel()
+    @Published private(set) var searchResultUiModel: SearchResultUiModel
 
     @Published var query: String
 
@@ -27,6 +27,10 @@ class SearchViewModel: ObservableObject {
         self.query = query
         self.lastQuery = lastQuery
         self.searchResultUiModel = searchResultUiModel
+    }
+
+    deinit {
+        Komol.d("deinit: \(type(of: self))")
     }
 
     func searchWithNewQuery() {
@@ -65,15 +69,14 @@ class SearchViewModel: ObservableObject {
         Komol.d("query=\(query), page=\(String(describing: page))")
         repoRepository.search(query: query, page: page)
             .receive(on: mainScheduler)
-            .sink { [weak self] completion in
+            .sink(with: self) { owner, completion in
                 if case let .failure(error) = completion {
-                    self?.searchResultUiModel = SearchResultUiModel(
+                    owner.searchResultUiModel = SearchResultUiModel(
                         searchResult: currentSearchResult,
                         error: error.localizedDescription
                     )
                 }
-            } receiveValue: { [weak self] newSearchResult in
-                guard let self = self else { return }
+            } receiveValue: { _, newSearchResult in
                 defer { self.lastQuery = query }
                 if mayPaging {
                     let currentRepos = currentSearchResult?.repos ?? []
