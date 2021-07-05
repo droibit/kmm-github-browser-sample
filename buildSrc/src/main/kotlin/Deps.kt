@@ -1,8 +1,6 @@
 object Deps {
     object Plugins {
-        // Workaround for Hilt plugin crash.
-        // ref. https://github.com/google/dagger/issues/2700
-        const val android = "com.android.tools.build:gradle:7.1.0-alpha02"
+        const val android = "com.android.tools.build:gradle:7.0.0-beta05"
         const val sqlDelight = "com.squareup.sqldelight:gradle-plugin:${SQLDelight.version}"
         const val daggerHilt = "com.google.dagger:hilt-android-gradle-plugin:${Dagger.version}"
         const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Androidx.Navigation.version}"
