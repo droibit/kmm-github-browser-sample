@@ -8,7 +8,7 @@ struct UserView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            makeHeaderView(
+            UserHeaderView(
                 user: User(
                     login: "droibit",
                     avatarUrl: "https://avatars.githubusercontent.com/u/1456714?v=4",
@@ -35,35 +35,6 @@ struct UserView: View {
             )
         }
         .navigationBarTitle("User")
-    }
-
-    private func makeHeaderView(user: User) -> some View {
-        HStack(spacing: 16) {
-            let iconSize: CGFloat = 64
-            LazyImage(source: user.avatarUrl) { state in
-                if let image = state.image {
-                    image
-                } else {
-                    SwiftUI.Image(systemName: "person.crop.circle.fill")
-                        .resizable()
-                        .frame(width: 48, height: 48)
-                        .scaledToFit()
-                }
-            }
-            .processors([ImageProcessors.Resize(width: iconSize)])
-            .clipShape(Circle())
-            .overlay(Circle().stroke(Color.secondary.opacity(0.25), lineWidth: 1))
-            .frame(width: iconSize, height: iconSize)
-
-            VStack(alignment: .leading, spacing: 8) {
-                Text(user.name!)
-                    .font(.title3.bold())
-                Text(user.login)
-                    .font(.body)
-                    .foregroundColor(.secondary)
-            }
-        }
-        .padding()
     }
 }
 
