@@ -31,10 +31,10 @@ class RepoViewModel: ObservableObject {
         guard cancellables.isEmpty else {
             return
         }
-        refresh(owner: owner, name: name)
+        getRepo(owner: owner, name: name)
     }
 
-    func refresh(owner: String, name: String) {
+    func getRepo(owner: String, name: String) {
         guard !getRepoUiModel.inProgress else {
             return
         }

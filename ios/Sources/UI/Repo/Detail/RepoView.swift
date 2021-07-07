@@ -12,7 +12,7 @@ struct RepoView: View {
         _RepoView(
             getRepoUiModel: viewModel.getRepoUiModel
         ) {
-            viewModel.refresh(owner: owner, name: name)
+            viewModel.getRepo(owner: owner, name: name)
         }
         .onAppear {
             viewModel.onAppear(owner: owner, name: name)

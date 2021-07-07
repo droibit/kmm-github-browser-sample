@@ -1,14 +1,91 @@
+import Combine
 import Nuke
 import NukeUI
 import Shared
 import SwiftUI
 
+class TestViewModel: ObservableObject {
+    let uuid = UUID()
+    deinit {
+        Komol.d("deinit: \(self)")
+    }
+}
+
 struct UserView: View {
+    @InjectedStateObject var viewModel: UserViewModel
+
+    @StateObject var test = TestViewModel()
+
     let login: String
 
     var body: some View {
+        Komol.d("test: \(test.uuid)")
+        return _UserView(
+            getUserUiModel: viewModel.getUserUiModel
+        ) {
+            viewModel.getUser(login: login)
+        }
+        .onAppear {
+            viewModel.onAppear(login: login)
+        }
+        .onReceive(viewModel.$getUserUiModel) { uiModel in
+            if let error = uiModel.error {
+                // TODO: Show error message.
+                Komol.e(error)
+            }
+        }
+        .navigationBarTitle("User", displayMode: .inline)
+    }
+}
+
+private struct _UserView: View {
+    private let getUserUiModel: GetUserUiModel
+
+    private let refresh: () -> Void
+
+    init(getUserUiModel: GetUserUiModel,
+         refresh: @escaping () -> Void = {})
+    {
+        self.getUserUiModel = getUserUiModel
+        self.refresh = refresh
+    }
+
+    var body: some View {
+        Group {
+            if getUserUiModel.inProgress {
+                InProgressView()
+            }
+
+            if let uiModel = getUserUiModel.userUiModel {
+                makeContentView(with: uiModel)
+            }
+
+            if let error = getUserUiModel.error {
+                RetryView(message: error, retryAction: refresh)
+            }
+
+            if getUserUiModel.hasNoState {
+                InProgressView()
+            }
+        }
+    }
+
+    private func makeContentView(with uiModel: UserUiModel) -> some View {
         VStack(alignment: .leading) {
-            UserHeaderView(
+            UserHeaderView(user: uiModel.user)
+            RepoListView(
+                header: "Repositories",
+                repos: uiModel.repos,
+                showsFooterProress: false
+            )
+        }
+    }
+}
+
+struct UserView_Previews: PreviewProvider {
+    static var previews: some View {
+        let getUserUiModel = GetUserUiModel(
+            userUiModel: .init(
                 user: User(
                     login: "droibit",
                     avatarUrl: "https://avatars.githubusercontent.com/u/1456714?v=4",
@@ -16,11 +93,7 @@ struct UserView: View {
                     company: nil,
                     reposUrl: nil,
                     blog: nil
-                )
-            )
-
-            RepoListView(
-                header: "Repositories",
+                ),
                 repos: [
                     Repo(
                         id: 1,
@@ -33,20 +106,14 @@ struct UserView: View {
                     ),
                 ]
             )
-        }
-        .navigationBarTitle("User")
-    }
-}
+        )
 
-struct UserView_Previews: PreviewProvider {
-    static var previews: some View {
         Group {
-            UserView(login: "droibit")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            _UserView(getUserUiModel: getUserUiModel)
+                .previewDevice("iPhone SE (2nd generation)")
                 .preferredColorScheme(.light)
 
-            UserView(login: "droibit")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            _UserView(getUserUiModel: getUserUiModel)
                 .previewDevice("iPhone 12")
                 .preferredColorScheme(.dark)
         }

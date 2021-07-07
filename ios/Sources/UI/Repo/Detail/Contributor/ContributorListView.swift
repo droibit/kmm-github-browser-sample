@@ -5,7 +5,7 @@ struct ContributorListView: View {
     let contributors: [Contributor]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 0) {
             Text("Contributors")
                 .font(.headline.weight(.regular))
                 .padding(.horizontal)
@@ -13,9 +13,11 @@ struct ContributorListView: View {
             if contributors.isEmpty {
                 EmptyView()
             } else {
-                List(contributors) { contributor in
-                    NavigationLink(destination: UserView(login: contributor.login)) {
-                        ContributorItemView(contributor: contributor)
+                List {
+                    ForEach(contributors) { contributor in
+                        NavigationLink(destination: UserView(login: contributor.login)) {
+                            ContributorItemView(contributor: contributor)
+                        }
                     }
                 }
                 .listStyle(PlainListStyle())

@@ -24,15 +24,16 @@ struct RepoListView: View {
     }
 
     var body: some View {
-        if repos.isEmpty {
-            EmptyView()
-        } else {
-            VStack(alignment: .leading, spacing: 0) {
-                if !header.isEmpty {
-                    Text(header)
-                        .font(.headline.weight(.regular))
-                        .padding(.horizontal)
-                }
+        VStack(alignment: .leading, spacing: 4) {
+            if !header.isEmpty {
+                Text(header)
+                    .font(.headline.weight(.regular))
+                    .padding(.horizontal)
+            }
+
+            if repos.isEmpty {
+                EmptyView()
+            } else {
                 List {
                     ForEach(repos) { repo in
                         NavigationLink(destination: RepoView(owner: repo.ownerLogin, name: repo.name)) {
@@ -54,9 +55,9 @@ struct RepoListView: View {
                     }
                 }
                 .listStyle(PlainListStyle())
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
