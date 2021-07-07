@@ -5,22 +5,23 @@ struct ContributorListView: View {
     let contributors: [Contributor]
 
     var body: some View {
-        if contributors.isEmpty {
-            EmptyView()
-        } else {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("Contributors")
-                    .font(.headline.weight(.regular))
-                    .padding(.horizontal)
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Contributors")
+                .font(.headline.weight(.regular))
+                .padding(.horizontal)
+
+            if contributors.isEmpty {
+                EmptyView()
+            } else {
                 List(contributors) { contributor in
                     NavigationLink(destination: UserView(login: contributor.login)) {
                         ContributorItemView(contributor: contributor)
                     }
                 }
                 .listStyle(PlainListStyle())
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

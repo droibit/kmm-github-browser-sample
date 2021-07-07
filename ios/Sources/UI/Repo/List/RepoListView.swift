@@ -35,7 +35,7 @@ struct RepoListView: View {
                 }
                 List {
                     ForEach(repos) { repo in
-                        NavigationLink(destination: RepoView(repo: repo)) {
+                        NavigationLink(destination: RepoView(owner: repo.ownerLogin, name: repo.name)) {
                             RepoItemView(repo: repo)
                                 .onAppear {
                                     if repo === repos.last {

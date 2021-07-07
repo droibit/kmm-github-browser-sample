@@ -2,40 +2,75 @@ import Shared
 import SwiftUI
 
 struct RepoView: View {
-    let repo: Repo
+    @InjectedStateObject var viewModel: RepoViewModel
+
+    let owner: String
+
+    let name: String
 
     var body: some View {
-        VStack(alignment: .leading) {
-            VStack(alignment: .leading, spacing: 8) {
-                Text(repo.fullName)
-                    .font(.title2.bold())
-
-                if let desc = repo.description_, !desc.isEmpty {
-                    Text(desc)
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                }
+        _RepoView(
+            getRepoUiModel: viewModel.getRepoUiModel
+        ) {
+            viewModel.refresh(owner: owner, name: name)
+        }
+        .onAppear {
+            viewModel.onAppear(owner: owner, name: name)
+        }
+        .onReceive(viewModel.$getRepoUiModel) { uiModel in
+            if let error = uiModel.error {
+                // TODO: Show error message.
+                Komol.e(error)
             }
-            .padding()
-
-            ContributorListView(contributors: [
-                Contributor(
-                    repoName: "kmm-github-browser-sample",
-                    repoOwner: "droibit",
-                    login: "droibit",
-                    contributions: 47,
-                    avatarUrl: "https://avatars.githubusercontent.com/u/1456714?v=4"
-                ),
-            ])
         }
         .navigationBarTitle(Text("Repository"), displayMode: .inline)
     }
 }
 
+private struct _RepoView: View {
+    private let getRepoUiModel: GetRepoUiModel
+
+    private let refresh: () -> Void
+
+    init(getRepoUiModel: GetRepoUiModel,
+         refresh: @escaping () -> Void = {})
+    {
+        self.getRepoUiModel = getRepoUiModel
+        self.refresh = refresh
+    }
+
+    var body: some View {
+        Group {
+            if getRepoUiModel.inProgress {
+                InProgressView()
+            }
+
+            if let uiModel = getRepoUiModel.repoUiModel {
+                makeContentView(with: uiModel)
+            }
+
+            if let error = getRepoUiModel.error {
+                RetryView(message: error, retryAction: refresh)
+            }
+
+            if getRepoUiModel.hasNoState {
+                InProgressView()
+            }
+        }
+    }
+
+    private func makeContentView(with uiModel: RepoUiModel) -> some View {
+        VStack(alignment: .leading) {
+            RepoHeaderView(repo: uiModel.repo)
+            ContributorListView(contributors: uiModel.contributors)
+        }
+    }
+}
+
 struct RepoView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            RepoView(
+        let getRepoUiModel = GetRepoUiModel(
+            repoUiModel: .init(
                 repo: Repo(
                     id: 1,
                     name: "kmm-github-browser-sample",
@@ -44,26 +79,27 @@ struct RepoView_Previews: PreviewProvider {
                     stars: 0,
                     ownerLogin: "droibit",
                     ownerUrl: ""
-                )
+                ),
+                contributors: [
+                    Contributor(
+                        repoName: "kmm-github-browser-sample",
+                        repoOwner: "droibit",
+                        login: "droibit",
+                        contributions: 47,
+                        avatarUrl: "https://avatars.githubusercontent.com/u/1456714?v=4"
+                    ),
+                ]
             )
-            .background(Color(UIColor.systemBackground))
-            .previewDevice("iPhone SE (2nd generation)")
-            .preferredColorScheme(.light)
+        )
 
-            RepoView(
-                repo: Repo(
-                    id: 1,
-                    name: "kmm-github-browser-sample",
-                    fullName: "droibit/kmm-github-browser-sample",
-                    description: nil,
-                    stars: 0,
-                    ownerLogin: "droibit",
-                    ownerUrl: ""
-                )
-            )
-            .background(Color(UIColor.systemBackground))
-            .previewDevice("iPhone 12")
-            .preferredColorScheme(.dark)
+        Group {
+            _RepoView(getRepoUiModel: getRepoUiModel)
+                .previewDevice("iPhone SE (2nd generation)")
+                .preferredColorScheme(.light)
+
+            _RepoView(getRepoUiModel: getRepoUiModel)
+                .previewDevice("iPhone 12")
+                .preferredColorScheme(.dark)
         }
     }
 }

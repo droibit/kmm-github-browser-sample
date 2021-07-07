@@ -16,7 +16,7 @@ class RepoViewModel: ObservableObject {
 
     init(repoRepository: RepoRepository,
          mainScheduler: AnySchedulerOf<DispatchQueue>,
-         getRepoUiModel: GetRepoUiModel)
+         getRepoUiModel: GetRepoUiModel = .init())
     {
         self.repoRepository = repoRepository
         self.mainScheduler = mainScheduler
@@ -38,6 +38,7 @@ class RepoViewModel: ObservableObject {
         guard !getRepoUiModel.inProgress else {
             return
         }
+        getRepoUiModel = GetRepoUiModel(inProgress: true)
 
         Publishers.Zip(
             repoRepository.loadRepo(owner: owner, name: name),

@@ -95,7 +95,7 @@ struct SearchView_Previews: PreviewProvider {
             ],
             nextPage: nil)
         )
-        
+
         Group {
             _SearchView(
                 query: .constant("kmm"),

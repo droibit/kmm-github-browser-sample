@@ -7,8 +7,8 @@ struct ContributorItemView: View {
     let contributor: Contributor
 
     var body: some View {
-        HStack(spacing: 8) {
-            let iconSize: CGFloat = 32
+        HStack(spacing: 16) {
+            let iconSize: CGFloat = 40
             LazyImage(source: contributor.avatarUrl) { state in
                 if let image = state.image {
                     image

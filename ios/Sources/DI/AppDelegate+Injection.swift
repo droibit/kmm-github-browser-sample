@@ -61,6 +61,13 @@ extension Resolver: ResolverRegistering {
                 mainScheduler: resolve(name: .main)
             )
         }
+
+        register {
+            RepoViewModel(
+                repoRepository: resolve(),
+                mainScheduler: resolve(name: .main)
+            )
+        }
     }
 }
 
