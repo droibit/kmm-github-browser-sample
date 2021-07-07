@@ -38,11 +38,9 @@ struct ContributorListView_Previews: PreviewProvider {
 
         Group {
             ContributorListView(contributors: contributors)
-                .background(Color(UIColor.systemBackground))
                 .preferredColorScheme(.light)
 
             ContributorListView(contributors: contributors)
-                .background(Color(UIColor.systemBackground))
                 .preferredColorScheme(.dark)
         }
         .previewLayout(.sizeThatFits)

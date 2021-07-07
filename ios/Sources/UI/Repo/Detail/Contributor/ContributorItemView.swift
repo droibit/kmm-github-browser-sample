@@ -49,12 +49,10 @@ struct ContributorItemView_Previews: PreviewProvider {
 
         Group {
             ContributorItemView(contributor: contributor)
-                .background(Color(UIColor.systemBackground))
                 .preferredColorScheme(.light)
 
             ContributorItemView(contributor: contributor)
                 .background(Color(UIColor.systemBackground))
-                .preferredColorScheme(.dark)
         }
         .previewLayout(.sizeThatFits)
     }

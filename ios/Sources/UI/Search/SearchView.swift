@@ -81,20 +81,33 @@ private struct _SearchView: View {
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
+        let searchResultUiModel = SearchResultUiModel(
+            searchResult: .init(repos: [
+                Repo(
+                    id: 1,
+                    name: "kmm-github-browser-sample",
+                    fullName: "droibit/kmm-github-browser-sample",
+                    description: "Github Browser sample using Kotlin Multiplatform Mobile.",
+                    stars: 0,
+                    ownerLogin: "droibit",
+                    ownerUrl: ""
+                ),
+            ],
+            nextPage: nil)
+        )
+        
         Group {
             _SearchView(
-                query: .constant(""),
-                searchResultUiModel: .init(inProgress: true)
+                query: .constant("kmm"),
+                searchResultUiModel: searchResultUiModel
             )
-            .background(Color(UIColor.systemBackground))
             .previewDevice("iPhone SE (2nd generation)")
             .preferredColorScheme(.light)
 
             _SearchView(
-                query: .constant(""),
-                searchResultUiModel: .init(inProgress: true)
+                query: .constant("kmm"),
+                searchResultUiModel: searchResultUiModel
             )
-            .background(Color(UIColor.systemBackground))
             .previewDevice("iPhone 12")
             .preferredColorScheme(.dark)
         }

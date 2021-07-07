@@ -72,12 +72,10 @@ struct UserView_Previews: PreviewProvider {
         Group {
             UserView(login: "droibit")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color(UIColor.systemBackground))
                 .preferredColorScheme(.light)
 
             UserView(login: "droibit")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color(UIColor.systemBackground))
                 .previewDevice("iPhone 12")
                 .preferredColorScheme(.dark)
         }

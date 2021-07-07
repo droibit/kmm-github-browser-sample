@@ -17,11 +17,9 @@ struct InProgressView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             InProgressView()
-                .background(Color(UIColor.systemBackground))
                 .preferredColorScheme(.light)
 
             InProgressView()
-                .background(Color(UIColor.systemBackground))
                 .preferredColorScheme(.dark)
         }
         .previewLayout(.sizeThatFits)

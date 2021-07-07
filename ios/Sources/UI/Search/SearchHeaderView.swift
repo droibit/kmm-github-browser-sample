@@ -40,11 +40,9 @@ struct SearchHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             QueryContainer()
-                .background(Color(UIColor.systemBackground))
                 .preferredColorScheme(.light)
 
             QueryContainer()
-                .background(Color(UIColor.systemBackground))
                 .preferredColorScheme(.dark)
         }
         .previewLayout(.sizeThatFits)

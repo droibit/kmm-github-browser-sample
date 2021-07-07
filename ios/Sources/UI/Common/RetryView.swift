@@ -24,6 +24,13 @@ struct RetryView: View {
 
 struct RetryView_Previews: PreviewProvider {
     static var previews: some View {
-        RetryView(message: "Error")
+        Group {
+            RetryView(message: "Error")
+                .preferredColorScheme(.light)
+
+            RetryView(message: "Error")
+                .preferredColorScheme(.dark)
+        }
+        .previewLayout(.sizeThatFits)
     }
 }
