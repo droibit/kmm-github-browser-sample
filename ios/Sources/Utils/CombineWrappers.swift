@@ -12,7 +12,11 @@ func createPublisher<T, E>(flowWrapper: FlowWrapper<T>) -> AnyPublisher<T, E> wh
         } onComplete: {
             subject.send(completion: .finished)
         } onThrow: { error in
-            subject.send(completion: .failure(error as! E))
+            if let error = error as? E {
+                subject.send(completion: .failure(error))
+            } else {
+                Komol.w("Ignored: \(error)")
+            }
         }
         return subject.handleEvents(receiveCancel: {
             job.cancel(cause: nil)
@@ -28,7 +32,11 @@ func createOptionalPublisher<T, E>(flowWrapper: NullableFlowWrapper<T>) -> AnyPu
         } onComplete: {
             subject.send(completion: .finished)
         } onThrow: { error in
-            subject.send(completion: .failure(error as! E))
+            if let error = error as? E {
+                subject.send(completion: .failure(error))
+            } else {
+                Komol.w("Ignored: \(error)")
+            }
         }
         return subject.handleEvents(receiveCancel: {
             job.cancel(cause: nil)
@@ -45,7 +53,11 @@ func createFuture<T, E>(suspendWrapper: SuspendWrapper<T>) -> AnyPublisher<T, E>
                     promise(.success(item))
                 },
                 onThrow: { error in
-                    promise(.failure(error as! E))
+                    if let error = error as? E {
+                        promise(.failure(error))
+                    } else {
+                        Komol.w("Ignored: \(error)")
+                    }
                 }
             )
         }.handleEvents(receiveCancel: {
@@ -64,7 +76,11 @@ func createFuture<T, R, E>(suspendWrapper: SuspendWrapper<T>, transform: @escapi
                     promise(.success(transform(item)))
                 },
                 onThrow: { error in
-                    promise(.failure(error as! E))
+                    if let error = error as? E {
+                        promise(.failure(error))
+                    } else {
+                        Komol.w("Ignored: \(error)")
+                    }
                 }
             )
         }.handleEvents(receiveCancel: {
@@ -83,7 +99,11 @@ func createOptionalFuture<T, E>(suspendWrapper: NullableSuspendWrapper<T>) -> An
                     promise(.success(item))
                 },
                 onThrow: { error in
-                    promise(.failure(error as! E))
+                    if let error = error as? E {
+                        promise(.failure(error))
+                    } else {
+                        Komol.w("Ignored: \(error)")
+                    }
                 }
             )
         }.handleEvents(receiveCancel: {
