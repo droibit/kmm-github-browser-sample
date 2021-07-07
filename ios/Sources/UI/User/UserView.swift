@@ -4,23 +4,13 @@ import NukeUI
 import Shared
 import SwiftUI
 
-class TestViewModel: ObservableObject {
-    let uuid = UUID()
-    deinit {
-        Komol.d("deinit: \(self)")
-    }
-}
-
 struct UserView: View {
     @InjectedStateObject var viewModel: UserViewModel
-
-    @StateObject var test = TestViewModel()
 
     let login: String
 
     var body: some View {
-        Komol.d("test: \(test.uuid)")
-        return _UserView(
+        _UserView(
             getUserUiModel: viewModel.getUserUiModel
         ) {
             viewModel.getUser(login: login)

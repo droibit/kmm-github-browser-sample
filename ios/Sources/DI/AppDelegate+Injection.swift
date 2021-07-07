@@ -60,14 +60,14 @@ extension Resolver: ResolverRegistering {
                 repoRepository: resolve(),
                 mainScheduler: resolve(name: .main)
             )
-        }
+        }.scope(.shared)
 
         register {
             RepoViewModel(
                 repoRepository: resolve(),
                 mainScheduler: resolve(name: .main)
             )
-        }
+        }.scope(.shared)
 
         register {
             UserViewModel(
@@ -75,7 +75,7 @@ extension Resolver: ResolverRegistering {
                 repoRepository: resolve(),
                 mainScheduler: resolve(name: .main)
             )
-        }
+        }.scope(.shared)
     }
 }
 
