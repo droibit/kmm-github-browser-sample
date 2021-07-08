@@ -52,11 +52,23 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="?android:attr/colorBackground"
-            tools:visibility="gone"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchTextInputLayout" />
+
+        <com.example.android.app.ui.common.EmptyView
+            android:id="@+id/empty"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/colorBackground"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchTextInputLayout" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
