@@ -15,6 +15,7 @@ buildscript {
         classpath(Deps.Plugins.android)
         classpath(Deps.Plugins.sqlDelight)
         classpath(Deps.Plugins.daggerHilt)
+        classpath(Deps.Plugins.navSafeArgs)
     }
 }
 

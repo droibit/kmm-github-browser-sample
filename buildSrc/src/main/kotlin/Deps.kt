@@ -104,6 +104,7 @@ object Deps {
     }
 
     const val materialDesign = "com.google.android.material:material:1.4.0-rc01"
+    const val coil = "io.coil-kt:coil:1.2.2"
     const val inject = "com.chrynan.inject:inject:0.8.0"
 
     object Version {

@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -20,6 +21,7 @@ android {
     }
 
     buildFeatures {
+        dataBinding = true
     }
 
     buildTypes {
@@ -49,8 +51,16 @@ dependencies {
     implementation(Deps.Androidx.activity)
     implementation(Deps.Androidx.appCompat)
     implementation(Deps.Androidx.fragment)
+    implementation(Deps.Androidx.constraintLayout)
+    implementation(Deps.Androidx.recyclerView)
+    implementation(Deps.Androidx.Navigation.runtime)
+    implementation(Deps.Androidx.Navigation.fragment)
+    implementation(Deps.Androidx.Lifecycle.runtime)
+    implementation(Deps.Androidx.Lifecycle.liveData)
+    implementation(Deps.Androidx.Lifecycle.viewModel)
 
     implementation(Deps.materialDesign)
+    implementation(Deps.coil)
 
     implementation(Deps.Dagger.hilt)
     "kapt"(Deps.Dagger.compiler)
@@ -59,4 +69,11 @@ dependencies {
     implementation(Deps.Komol.timber)
 
     implementation(Deps.Ktor.Client.core)
+}
+
+kapt {
+    correctErrorTypes = true
+    arguments {
+        arg("dagger.experimentalDaggerErrorMessages", "enabled")
+    }
 }
