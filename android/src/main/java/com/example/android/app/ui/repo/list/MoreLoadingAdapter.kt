@@ -10,8 +10,10 @@ class MoreLoadingAdapter : RecyclerView.Adapter<MoreLoadingAdapter.ViewHolder>()
     var visibleIndicator: Boolean = false
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
-            field = value
-            notifyDataSetChanged()
+            if (field != value) {
+                field = value
+                notifyDataSetChanged()
+            }
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

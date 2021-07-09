@@ -30,3 +30,16 @@ fun View.bindGoneUnless(gone: Boolean, requestFocus: Boolean = false) {
         requestFocus()
     }
 }
+
+@BindingAdapter("android:text")
+fun RetryView.bindText(text: String?) {
+    if (text.isNullOrEmpty()) {
+        return
+    }
+    message = text
+}
+
+@BindingAdapter("retryCallback")
+fun RetryView.bindCallback(callback: RetryView.Callback) {
+    setRetryCallback(callback)
+}

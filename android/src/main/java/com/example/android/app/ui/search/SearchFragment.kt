@@ -1,11 +1,18 @@
 package com.example.android.app.ui.search
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,9 +24,13 @@ import com.example.android.app.utils.toggleSofInputVisibility
 import com.example.shared.data.source.local.db.Repo
 import com.github.droibit.komol.Komol
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : Fragment(), RepoListAdapter.RepoClickListener {
+
+    private val viewModel: SearchViewModel by viewModels()
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -32,7 +43,10 @@ class SearchFragment : Fragment(), RepoListAdapter.RepoClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.viewModel = viewModel
+        }
         return binding.root
     }
 
@@ -41,19 +55,7 @@ class SearchFragment : Fragment(), RepoListAdapter.RepoClickListener {
         initRepoRecyclerView()
         initSearchEditText()
 
-        repoListAdapter.submitList(
-            List(10) {
-                Repo(
-                    id = it.toLong(),
-                    name = "kmm-github-browser-sample",
-                    fullName = "droibit/kmm-github-browser-sample",
-                    description = "Github Browser sample using Kotlin Multiplatform Mobile.",
-                    stars = it.toLong(),
-                    ownerLogin = "droibit",
-                    ownerUrl = ""
-                )
-            }
-        )
+        subscribeSearchResultUiModel()
     }
 
     private fun initRepoRecyclerView() {
@@ -74,7 +76,7 @@ class SearchFragment : Fragment(), RepoListAdapter.RepoClickListener {
                     val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                     val lastPosition = layoutManager.findLastVisibleItemPosition()
                     if (lastPosition == concatAdapter.itemCount - 1) {
-                        // TODO: Paging
+                        viewModel.search()
                     }
                 }
             })
@@ -91,14 +93,35 @@ class SearchFragment : Fragment(), RepoListAdapter.RepoClickListener {
                 false
             }
         }
+
+        binding.searchTextEdit.setOnKeyListener { v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                search(v)
+                true
+            } else {
+                false
+            }
+        }
     }
 
     private fun search(view: View) {
-        val query = binding.searchTextEdit.text.toString()
-        Komol.d("search: $query")
-
         view.toggleSofInputVisibility(false)
-        // view.clearFocus()
+        view.clearFocus()
+
+        viewModel.searchWithNewQuery()
+    }
+
+    private fun subscribeSearchResultUiModel() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.searchResultUiModel
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+                .collect { searchResultUiModel ->
+                    searchResultUiModel.searchResult?.let {
+                        repoListAdapter.submitList(it.repos)
+                    }
+                    moreLoadingAdapter.visibleIndicator = searchResultUiModel.pagingInProgress
+                }
+        }
     }
 
     override fun onDestroyView() {
