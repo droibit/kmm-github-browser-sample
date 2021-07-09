@@ -8,10 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.app.databinding.ListItemRepoBinding
 import com.example.shared.data.source.local.db.Repo
 
-class RepoListAdapter : ListAdapter<Repo, RepoListAdapter.ViewHolder>(DIFF_CALLBACK) {
+class RepoListAdapter(
+    private val clickListener: RepoClickListener
+) : ListAdapter<Repo, RepoListAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(parent)
+        return ViewHolder(parent).apply {
+            itemView.setOnClickListener {
+                clickListener.onRepoClick(getItem(bindingAdapterPosition))
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -28,6 +34,10 @@ class RepoListAdapter : ListAdapter<Repo, RepoListAdapter.ViewHolder>(DIFF_CALLB
                 return oldItem == newItem
             }
         }
+    }
+
+    fun interface RepoClickListener {
+        fun onRepoClick(repo: Repo)
     }
 
     class ViewHolder(
