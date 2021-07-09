@@ -47,17 +47,6 @@
             app:layout_constraintTop_toBottomOf="@+id/searchTextInputLayout"
             tools:listitem="@layout/list_item_repo" />
 
-        <com.example.android.app.ui.common.ProgressView
-            android:id="@+id/progress"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="?android:attr/colorBackground"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchTextInputLayout" />
-
         <com.example.android.app.ui.common.EmptyView
             android:id="@+id/empty"
             android:layout_width="0dp"
@@ -69,6 +58,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchTextInputLayout" />
 
+
+        <com.example.android.app.ui.common.RetryView
+            android:id="@+id/retry"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/colorBackground"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchTextInputLayout"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.example.android.app.ui.common.ProgressView
+            android:id="@+id/progress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/colorBackground"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchTextInputLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
