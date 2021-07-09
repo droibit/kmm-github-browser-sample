@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="repo"
             type="com.example.shared.data.source.local.db.Repo" />
@@ -11,16 +12,18 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:minHeight="?attr/minTouchTargetSize">
 
         <TextView
             android:id="@+id/repoName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:text="@{repo.name}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:textColor="@color/material_on_surface_emphasis_high_type"
-            android:text="@{repo.name}"
             app:layout_constraintEnd_toEndOf="@id/endGuideline"
             app:layout_constraintStart_toStartOf="@+id/beginGuideline"
             app:layout_constraintTop_toTopOf="parent"
@@ -44,10 +47,10 @@
             android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
+            android:text="@{repo.description}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="@color/material_on_surface_emphasis_medium"
-            android:text="@{repo.description}"
             app:goneUnless="@{repo.description.empty}"
             app:layout_constraintEnd_toStartOf="@+id/endGuideline"
             app:layout_constraintStart_toStartOf="@+id/beginGuideline"
@@ -64,11 +67,11 @@
             android:drawablePadding="4dp"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-            android:textColor="@color/yellow_500"
             android:text="@{String.valueOf(repo.stars)}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textColor="@color/yellow_700"
             app:drawableStartCompat="@drawable/ic_round_star"
-            app:drawableTint="@color/yellow_500"
+            app:drawableTint="@color/yellow_700"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/login"
             app:layout_constraintHorizontal_bias="0.0"
