@@ -15,6 +15,7 @@ import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.utils.io.errors.IOException
 import kotlin.coroutines.cancellation.CancellationException
 
 @Singleton
@@ -45,6 +46,8 @@ class GitHubService(
                 throw GitHubApiError(e.response, e)
             }
             Response.error(e.response)
+        } catch (e: IOException) {
+            throw GitHubApiError(null, e)
         }
     }
 
@@ -63,6 +66,8 @@ class GitHubService(
                 throw GitHubApiError(e.response, e)
             }
             Response.error(e.response)
+        } catch (e: IOException) {
+            throw GitHubApiError(null, e)
         }
     }
 
@@ -81,6 +86,8 @@ class GitHubService(
                 throw GitHubApiError(e.response, e)
             }
             Response.error(e.response)
+        } catch (e: IOException) {
+            throw GitHubApiError(null, e)
         }
     }
 
@@ -103,6 +110,8 @@ class GitHubService(
                 throw GitHubApiError(e.response, e)
             }
             Response.error(e.response)
+        } catch (e: IOException) {
+            throw GitHubApiError(null, e)
         }
     }
 
@@ -124,6 +133,8 @@ class GitHubService(
             return createGitHubResponse(rawResponse)
         } catch (e: ResponseException) {
             throw GitHubApiError(e.response, e)
+        } catch (e: IOException) {
+            throw GitHubApiError(null, e)
         }
     }
 }

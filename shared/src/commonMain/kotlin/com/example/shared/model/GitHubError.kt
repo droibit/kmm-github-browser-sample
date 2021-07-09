@@ -12,22 +12,18 @@ sealed class GitHubError(
     message: String? = null,
     cause: Throwable? = null
 ) : Exception(message, cause) {
-    class NetworkError(cause: Throwable) : GitHubError(cause = cause)
+    class NetworkError(cause: Throwable) : GitHubError(cause = cause) {
+        override val message: String? = cause.message
+    }
     class LateLimitError(val limit: GitHubApiRateLimit) : GitHubError() {
-        override fun toString(): String = limit.toString()
+        @Suppress("RedundantNullableReturnType")
+        override val message: String? = limit.toString()
     }
 
-    class SystemError(message: String?, cause: Throwable?) : GitHubError(message, cause)
-    class UnknownError(message: String?, cause: Throwable?) : GitHubError(message, cause)
+    class SystemError(message: String, cause: Throwable?) : GitHubError(message, cause)
+    class UnknownError(message: String, cause: Throwable?) : GitHubError(message, cause)
 
     companion object {
-        internal operator fun invoke(rawResponse: HttpResponse): GitHubError {
-            return UnknownError(
-                message = rawResponse.status.toString(),
-                cause = null
-            )
-        }
-
         internal operator fun invoke(error: GitHubApiError): GitHubError {
             return when {
                 error.cause is IOException -> NetworkError(error.cause)

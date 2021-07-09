@@ -6,20 +6,21 @@ import io.ktor.http.HttpStatusCode
 import kotlin.LazyThreadSafetyMode.NONE
 
 internal class GitHubApiError(
-    val rawResponse: HttpResponse,
-    cause: Throwable? = null
+    val rawResponse: HttpResponse?,
+    cause: Throwable
 ) : Exception(cause) {
 
     val rateLimit: GitHubApiRateLimit? by lazy(NONE) {
-        GitHubApiRateLimit(rawResponse.headers)
+        if (rawResponse != null) {
+            GitHubApiRateLimit(rawResponse.headers)
+        } else {
+            null
+        }
     }
 
-    val status: HttpStatusCode get() = rawResponse.status
+    val status: HttpStatusCode? get() = rawResponse?.status
 
     override fun toString(): String {
-        if (cause == null) {
-            return rawResponse.status.toString()
-        }
-        return super.toString()
+        return cause.toString()
     }
 }
