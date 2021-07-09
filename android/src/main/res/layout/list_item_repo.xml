@@ -71,7 +71,7 @@
             app:drawableTint="@color/yellow_500"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/login"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="@id/beginGuideline"
             app:layout_constraintTop_toBottomOf="@+id/description"
@@ -79,22 +79,22 @@
 
         <TextView
             android:id="@+id/login"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:drawablePadding="4dp"
             android:gravity="center_vertical"
+            android:text="@{repo.ownerLogin}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             android:textColor="@color/material_on_surface_emphasis_medium"
-            android:text="@{repo.ownerLogin}"
             app:drawableStartCompat="@drawable/ic_round_person"
             app:drawableTint="@color/material_on_surface_emphasis_medium"
+            app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="@+id/starsText"
             app:layout_constraintEnd_toStartOf="@+id/endGuideline"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/starsText"
             app:layout_constraintTop_toTopOf="@+id/starsText"
-            app:layout_constraintWidth_default="wrap"
             tools:text="droibit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
