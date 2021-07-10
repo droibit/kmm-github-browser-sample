@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.app.databinding.FragmentSearchBinding
 import com.example.android.app.ui.repo.list.MoreLoadingAdapter
 import com.example.android.app.ui.repo.list.RepoListAdapter
+import com.example.android.app.ui.repo.list.RepoListAdapter.RepoClickListener
 import com.example.android.app.ui.search.SearchFragmentDirections.Companion.toRepoFragment
 import com.example.android.app.utils.navigateSafely
 import com.example.android.app.utils.toggleSofInputVisibility
@@ -28,7 +29,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(), RepoListAdapter.RepoClickListener {
+class SearchFragment : Fragment(), RepoClickListener {
     private val viewModel: SearchViewModel by viewModels()
 
     private var _binding: FragmentSearchBinding? = null
@@ -129,7 +130,7 @@ class SearchFragment : Fragment(), RepoListAdapter.RepoClickListener {
     }
 
     override fun onRepoClick(repo: Repo) {
-        Komol.d("onRepoClick(repo: ${repo.fullName})")
+        Komol.d("repo: ${repo.fullName}")
         findNavController()
             .navigateSafely(toRepoFragment(repo.ownerLogin, repo.name))
     }
