@@ -1,9 +1,14 @@
 package com.example.android.app.ui.common
 
+import android.graphics.drawable.Drawable
 import android.view.View
+import android.widget.ImageView
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
+import coil.load
+import coil.size.ViewSizeResolver
+import coil.transform.CircleCropTransformation
 
 @BindingAdapter(
     "visibleUnless",
@@ -28,6 +33,17 @@ fun View.bindGoneUnless(gone: Boolean, requestFocus: Boolean = false) {
 
     if (isVisible && requestFocus) {
         requestFocus()
+    }
+}
+
+@BindingAdapter("imageUrl", "placeholder", "error")
+fun ImageView.bindImageUrl(url: String, placeholder: Drawable, error: Drawable) {
+    load(url) {
+        size(ViewSizeResolver(this@bindImageUrl))
+        crossfade(true)
+        placeholder(placeholder)
+        error(error)
+        transformations(CircleCropTransformation())
     }
 }
 
