@@ -68,18 +68,19 @@ class SearchViewModel(
         Komol.d("query=$query, page=${page ?: "null"}")
 
         viewModelScope.launch {
-            try {
+            val result = try {
                 val newSearchResult = repoRepository.search(query, page)
                 val currentRepos: List<Repo> = if (mayPaging) {
                     currentSearchResult?.repos ?: emptyList()
                 } else {
                     emptyList()
                 }
-                emit(SearchResultUiModel(searchResult = newSearchResult.merge(currentRepos)))
                 lastQuery = query
+                SearchResultUiModel(searchResult = newSearchResult.merge(currentRepos))
             } catch (e: GitHubError) {
-                emit(SearchResultUiModel(error = requireNotNull(e.message)))
+                SearchResultUiModel(error = requireNotNull(e.message))
             }
+            emit(result)
         }
     }
 
