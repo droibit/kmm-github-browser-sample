@@ -1,6 +1,5 @@
 package com.example.android.app.ui.search
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -9,10 +8,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.app.databinding.FragmentSearchBinding
 import com.example.android.app.ui.repo.list.MoreLoadingAdapter
 import com.example.android.app.ui.repo.list.RepoListAdapter
+import com.example.android.app.ui.search.SearchFragmentDirections.Companion.toRepoFragment
+import com.example.android.app.utils.navigateSafely
 import com.example.android.app.utils.toggleSofInputVisibility
 import com.example.shared.data.source.local.db.Repo
 import com.github.droibit.komol.Komol
@@ -29,7 +29,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : Fragment(), RepoListAdapter.RepoClickListener {
-
     private val viewModel: SearchViewModel by viewModels()
 
     private var _binding: FragmentSearchBinding? = null
@@ -131,5 +130,7 @@ class SearchFragment : Fragment(), RepoListAdapter.RepoClickListener {
 
     override fun onRepoClick(repo: Repo) {
         Komol.d("onRepoClick(repo: ${repo.fullName})")
+        findNavController()
+            .navigateSafely(toRepoFragment(repo.ownerLogin, repo.name))
     }
 }
