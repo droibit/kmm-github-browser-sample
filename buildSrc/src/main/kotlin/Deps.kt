@@ -36,6 +36,7 @@ object Deps {
             internal const val version = "2.4.0-alpha04"
             const val runtime = "androidx.navigation:navigation-runtime-ktx:$version"
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
+            const val ui = "androidx.navigation:navigation-ui-ktx:$version"
         }
 
         object Lifecycle {

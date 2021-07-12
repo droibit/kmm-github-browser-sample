@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.android.app.ui.search.SearchFragment"
-        android:label="SearchFragment"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/toRepoFragment"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/repoFragment"
         android:name="com.example.android.app.ui.repo.detail.RepoFragment"
-        android:label="RepoFragment"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_repo">
         <argument
             android:name="owner"
