@@ -8,14 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.android.app.databinding.FragmentRepoBinding
 import com.example.android.app.ui.common.RetryView
 import com.example.android.app.ui.repo.detail.contributor.ContributorListAdapter
 import com.example.android.app.ui.repo.detail.contributor.ContributorListAdapter.ContributorClickListener
+import com.example.android.app.ui.repo.detail.RepoFragmentDirections.Companion.toUserFragment
+import com.example.android.app.utils.navigateSafely
 import com.example.shared.data.source.local.db.Contributor
-import com.example.shared.data.source.local.db.Repo
 import com.github.droibit.komol.Komol
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -86,6 +88,8 @@ class RepoFragment : Fragment(), ContributorClickListener, RetryView.Callback {
 
     override fun onContributorClick(contributor: Contributor) {
         Komol.d("contributor: ${contributor.login}")
+        findNavController()
+            .navigateSafely(toUserFragment(contributor.login))
     }
 
     override fun retry() {
