@@ -6,6 +6,7 @@
     <string name="no_data">No data</string>
     <string name="retry">Retry</string>
     <string name="contributors">Contributors</string>
+    <string name="repositories">Repositories</string>
     
     <plurals name="contributions">
         <item quantity="one">%d commit</item>
