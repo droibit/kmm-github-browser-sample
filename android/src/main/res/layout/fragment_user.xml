@@ -8,6 +8,10 @@
         <variable
             name="user"
             type="com.example.shared.data.source.local.db.User" />
+
+        <variable
+            name="viewModel"
+            type="com.example.android.app.ui.user.UserViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,8 +101,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/repositoriesLabel"
-            app:visibleUnless="@{true}"
-            tools:listitem="@layout/list_item_repo" />
+            app:visibleUnless="@{viewModel.getUserUiModel.visibleRepos}"
+            tools:listitem="@layout/list_item_repo"
+            tools:visibility="visible" />
 
         <com.example.android.app.ui.common.EmptyView
             android:id="@+id/empty"
@@ -109,7 +114,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/repositoriesLabel"
-            app:visibleUnless="@{false}"
+            app:visibleUnless="@{viewModel.getUserUiModel.visibleEmptyRepo}"
             tools:visibility="gone" />
 
         <com.example.android.app.ui.common.RetryView
@@ -117,12 +122,13 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="?android:attr/colorBackground"
+            android:text="@{viewModel.getUserUiModel.error}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:visibleUnless="@{false}"
+            app:visibleUnless="@{viewModel.getUserUiModel.error != null}"
             tools:text="Error!!"
             tools:visibility="gone" />
 
@@ -135,9 +141,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:visibleUnless="@{false}"
+            app:visibleUnless="@{viewModel.getUserUiModel.inProgress}"
             tools:visibility="gone" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

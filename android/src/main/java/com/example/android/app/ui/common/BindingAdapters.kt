@@ -37,7 +37,7 @@ fun View.bindGoneUnless(gone: Boolean, requestFocus: Boolean = false) {
 }
 
 @BindingAdapter("imageUrl", "placeholder", "error")
-fun ImageView.bindImageUrl(url: String, placeholder: Drawable, error: Drawable) {
+fun ImageView.bindImageUrl(url: String?, placeholder: Drawable, error: Drawable) {
     load(url) {
         size(ViewSizeResolver(this@bindImageUrl))
         crossfade(true)

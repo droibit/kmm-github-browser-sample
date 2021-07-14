@@ -38,7 +38,7 @@
             android:name="login"
             app:argType="string" />
         <action
-            android:id="@+id/repoFragment"
+            android:id="@+id/toRepoFragment"
             app:destination="@id/repoFragment" />
     </fragment>
 
