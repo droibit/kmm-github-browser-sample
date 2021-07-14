@@ -67,7 +67,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchTextInputLayout"
-            app:visibleUnless="@{viewModel.searchResultUiModel.visibleEmptySearchResult}"
+            app:visibleUnless="@{viewModel.searchResultUiModel.hasNoState || viewModel.searchResultUiModel.visibleEmptySearchResult}"
             tools:visibility="gone" />
 
 

@@ -6,7 +6,9 @@ import com.example.shared.data.source.local.db.Repo
 data class RepoUiModel(
     val repo: Repo,
     val contributors: List<Contributor>
-)
+) {
+    val hasContributors: Boolean get() = contributors.isNotEmpty()
+}
 
 data class GetRepoUiModel(
     val inProgress: Boolean = false,
@@ -14,8 +16,8 @@ data class GetRepoUiModel(
     val error: String? = null
 ) {
     val visibleContributors: Boolean
-        get() = !repoUiModel?.contributors.isNullOrEmpty()
+        get() = repoUiModel?.hasContributors == true
 
     val visibleEmptyContributor: Boolean
-        get() = repoUiModel?.contributors?.isEmpty() == true
+        get() = repoUiModel?.hasContributors == false
 }

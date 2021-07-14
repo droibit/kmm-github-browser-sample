@@ -18,10 +18,10 @@ data class SearchResultUiModel(
         get() = inProgress && searchResult != null
 
     val visibleSearchResult: Boolean
-        get() = !searchResult?.repos.isNullOrEmpty()
+        get() = searchResult?.hasRepos == true
 
     val visibleEmptySearchResult: Boolean
-        get() = hasNoState || searchResult?.repos?.isEmpty() == true
+        get() = searchResult?.hasRepos == false
 }
 
 fun PagedRepoSearchResult.merge(existingRepos: List<Repo>) =

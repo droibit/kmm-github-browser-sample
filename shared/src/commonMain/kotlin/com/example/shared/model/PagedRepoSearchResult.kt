@@ -6,5 +6,7 @@ data class PagedRepoSearchResult(
     val repos: List<Repo>,
     val nextPage: Int?
 ) {
+    val hasRepos get() = repos.isNotEmpty()
+
     constructor() : this(emptyList(), null)
 }

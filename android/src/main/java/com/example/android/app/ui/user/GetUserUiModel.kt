@@ -6,7 +6,9 @@ import com.example.shared.data.source.local.db.User
 data class UserUiModel(
     val user: User,
     val repos: List<Repo>
-)
+) {
+    val hasRepos: Boolean get() = repos.isNotEmpty()
+}
 
 data class GetUserUiModel(
     val inProgress: Boolean = false,
@@ -14,8 +16,8 @@ data class GetUserUiModel(
     val error: String? = null
 ) {
     val visibleRepos: Boolean
-        get() = !userUiModel?.repos.isNullOrEmpty()
+        get() = userUiModel?.hasRepos == true
 
     val visibleEmptyRepo: Boolean
-        get() = userUiModel?.repos?.isEmpty() == true
+        get() = userUiModel?.hasRepos == false
 }
