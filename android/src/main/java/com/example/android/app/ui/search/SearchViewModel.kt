@@ -48,7 +48,7 @@ class SearchViewModel(
             return
         }
 
-        val query = this.query.value.lowercase().filter { !it.isWhitespace() }
+        val query = this.query.value.lowercase().filterNot { it.isWhitespace() }
         if (query.isEmpty()) {
             lastQuery = query
             emit(SearchResultUiModel())

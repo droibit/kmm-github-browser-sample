@@ -9,4 +9,6 @@ data class PagedRepoSearchResult(
     val hasRepos get() = repos.isNotEmpty()
 
     constructor() : this(emptyList(), null)
+
+    fun merge(existingRepos: List<Repo>) = copy(repos = existingRepos + repos)
 }
