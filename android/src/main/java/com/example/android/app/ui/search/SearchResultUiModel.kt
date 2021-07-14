@@ -1,12 +1,13 @@
 package com.example.android.app.ui.search
 
 import com.example.shared.data.source.local.db.Repo
+import com.example.android.app.ui.common.Message
 import com.example.shared.model.PagedRepoSearchResult
 
 data class SearchResultUiModel(
     val inProgress: Boolean = false,
     val searchResult: PagedRepoSearchResult? = null,
-    val error: String? = null
+    val error: Message? = null
 ) {
     val hasNoState: Boolean
         get() = !inProgress && searchResult == null && error == null

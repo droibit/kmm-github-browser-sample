@@ -4,6 +4,8 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chrynan.inject.Inject
+import com.example.android.app.R
+import com.example.android.app.ui.common.Message
 import com.example.shared.data.repository.repo.RepoRepository
 import com.example.shared.model.GitHubError
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +20,7 @@ class RepoViewModel(
     private val repoRepository: RepoRepository,
     private val getRepoUiModelSink: MutableStateFlow<GetRepoUiModel>
 ) : ViewModel() {
-    val getRepoUiModel: StateFlow<GetRepoUiModel>
-        get() = getRepoUiModelSink
+    val getRepoUiModel: StateFlow<GetRepoUiModel> get() = getRepoUiModelSink
 
     @Inject
     constructor(
@@ -45,14 +46,14 @@ class RepoViewModel(
                 }
 
                 if (repo == null) {
-                    GetRepoUiModel(error = "Unknown repo: $owner/$name")
+                    GetRepoUiModel(error = Message(R.string.error_unknown_user, "$owner/$name"))
                 } else {
                     GetRepoUiModel(
                         repoUiModel = RepoUiModel(repo, contributors)
                     )
                 }
             } catch (e: GitHubError) {
-                GetRepoUiModel(error = requireNotNull(e.message))
+                GetRepoUiModel(error = Message(requireNotNull(e.message)))
             }
         }
     }

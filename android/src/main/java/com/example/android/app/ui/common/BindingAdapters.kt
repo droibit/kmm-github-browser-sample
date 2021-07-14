@@ -55,6 +55,14 @@ fun RetryView.bindText(text: String?) {
     message = text
 }
 
+@BindingAdapter("android:text")
+fun RetryView.bindMessage(message: Message?) {
+    if (message == null) {
+        return
+    }
+    this.message = message.getString(context)
+}
+
 @BindingAdapter("retryCallback")
 fun RetryView.bindCallback(callback: RetryView.Callback) {
     setRetryCallback(callback)

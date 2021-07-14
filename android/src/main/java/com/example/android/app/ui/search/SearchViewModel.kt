@@ -4,13 +4,13 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chrynan.inject.Inject
+import com.example.android.app.ui.common.Message
 import com.example.shared.data.repository.repo.RepoRepository
 import com.example.shared.data.source.local.db.Repo
 import com.example.shared.model.GitHubError
 import com.example.shared.model.PagedRepoSearchResult
 import com.github.droibit.komol.Komol
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -78,7 +78,7 @@ class SearchViewModel(
                 lastQuery = query
                 SearchResultUiModel(searchResult = newSearchResult.merge(currentRepos))
             } catch (e: GitHubError) {
-                SearchResultUiModel(error = requireNotNull(e.message))
+                SearchResultUiModel(error = Message(requireNotNull(e.message)))
             }
             emit(result)
         }

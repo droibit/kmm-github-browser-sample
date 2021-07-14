@@ -1,5 +1,6 @@
 package com.example.android.app.ui.repo.detail
 
+import com.example.android.app.ui.common.Message
 import com.example.shared.data.source.local.db.Contributor
 import com.example.shared.data.source.local.db.Repo
 
@@ -13,7 +14,7 @@ data class RepoUiModel(
 data class GetRepoUiModel(
     val inProgress: Boolean = false,
     val repoUiModel: RepoUiModel? = null,
-    val error: String? = null
+    val error: Message? = null
 ) {
     val visibleContributors: Boolean
         get() = repoUiModel?.hasContributors == true

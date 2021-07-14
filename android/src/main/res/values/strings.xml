@@ -7,6 +7,7 @@
     <string name="retry">Retry</string>
     <string name="contributors">Contributors</string>
     <string name="repositories">Repositories</string>
+    <string name="error_unknown_repo">Unknown repo: %1$s</string>
     
     <plurals name="contributions">
         <item quantity="one">%d commit</item>
