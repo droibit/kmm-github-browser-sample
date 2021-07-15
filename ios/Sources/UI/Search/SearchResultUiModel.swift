@@ -27,9 +27,3 @@ struct SearchResultUiModel {
         self.error = error
     }
 }
-
-extension PagedRepoSearchResult {
-    func merge(existingRepos repos: [Repo]) -> PagedRepoSearchResult {
-        PagedRepoSearchResult(repos: repos + self.repos, nextPage: nextPage)
-    }
-}
