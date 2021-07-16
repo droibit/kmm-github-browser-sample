@@ -16,9 +16,6 @@ packages:
   Resolver:
     url: https://github.com/hmlongco/Resolver
     version: 1.4.3
-  # Nuke:
-  #   url: https://github.com/kean/Nuke
-  #   version: 10.3.0
   NukeUI:
     url: https://github.com/kean/NukeUI
     version: 0.6.2    
@@ -35,6 +32,8 @@ targets:
         CURRENT_PROJECT_VERSION: 1
         ENABLE_PREVIEWS: true
         DEVELOPMENT_ASSET_PATHS: "\"Sources/Resources/Preview Content\""
+        OTHER_LDFLAGS: $(inherited) -framework Shared
+        FRAMEWORK_SEARCH_PATHS: $(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)
     sources:
       - path: Sources
     dependencies:
@@ -43,8 +42,6 @@ targets:
       - package: NukeUI
       - package: NukeUI
         product: Nuke
-      - framework: $SRCROOT/../shared/build/xcode-frameworks/Shared.framework
-        embed: true
     preBuildScripts:
       - name: Pack for Xcode
         script:  ./scripts/packforxcode.sh        
