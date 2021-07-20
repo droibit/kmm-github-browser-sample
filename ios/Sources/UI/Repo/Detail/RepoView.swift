@@ -57,6 +57,7 @@ private struct _RepoView: View {
                 InProgressView()
             }
         }
+        .transition(.fade)
     }
 
     private func makeContentView(with uiModel: RepoUiModel) -> some View {

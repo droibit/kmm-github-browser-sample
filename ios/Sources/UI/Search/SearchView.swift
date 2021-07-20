@@ -51,30 +51,32 @@ private struct _SearchView: View {
             }
             .padding()
 
-            if searchResultUiModel.firstInProgress {
-                InProgressView()
-            }
-
-            if let searchResult = searchResultUiModel.searchResult {
-                RepoListView(
-                    repos: searchResult.repos,
-                    showsFooterProress: searchResultUiModel.pagingInProgress
-                ) {
-                    search(false)
+            Group {
+                if searchResultUiModel.firstInProgress {
+                    InProgressView()
                 }
-            }
 
-            if let error = searchResultUiModel.error,
-               searchResultUiModel.searchResult == nil
-            {
-                RetryView(message: error) {
-                    search(true)
+                if let searchResult = searchResultUiModel.searchResult {
+                    RepoListView(
+                        repos: searchResult.repos,
+                        showsFooterProress: searchResultUiModel.pagingInProgress
+                    ) {
+                        search(false)
+                    }
                 }
-            }
 
-            if searchResultUiModel.hasNoState {
-                EmptyView()
-            }
+                if let error = searchResultUiModel.error,
+                   searchResultUiModel.searchResult == nil
+                {
+                    RetryView(message: error) {
+                        search(true)
+                    }
+                }
+
+                if searchResultUiModel.hasNoState {
+                    EmptyView()
+                }
+            }.transition(.fade)
         }
     }
 }

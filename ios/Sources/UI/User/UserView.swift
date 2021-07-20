@@ -58,6 +58,7 @@ private struct _UserView: View {
                 InProgressView()
             }
         }
+        .transition(.fade)
     }
 
     private func makeContentView(with uiModel: UserUiModel) -> some View {
