@@ -36,15 +36,23 @@ targets:
         FRAMEWORK_SEARCH_PATHS: $(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)
     sources:
       - path: Sources
+      - path: Sources/DI/NeedleGenerated.swift
+        optional: true
+        createIntermediateGroups: true      
     dependencies:
       - package: CombineSchedulers
       - package: Resolver
       - package: NukeUI
       - package: NukeUI
         product: Nuke
+      - carthage: NeedleFoundation  
     preBuildScripts:
       - name: Pack for Xcode
-        script:  ./scripts/packforxcode.sh        
+        script: ./scripts/packforxcode.sh
+      - name: Run needle
+        outputFiles:
+          - $SRCROOT/Sources/DI/NeedleGenerated.swift
+        script:  ./scripts/needle.sh        
     postCompileScripts:
       - name: Run SwiftFormat
         script: ./scripts/swiftformat.sh
