@@ -5,7 +5,7 @@ import Shared
 import SwiftUI
 
 struct UserView: View {
-    @InjectedStateObject var viewModel: UserViewModel
+    @StateObject var viewModel: UserViewModel = get(\.userViewModel)
 
     let login: String
 
@@ -58,7 +58,7 @@ private struct _UserView: View {
                 InProgressView()
             }
         }
-        .transition(.fade)
+        // .transition(.fade)
     }
 
     private func makeContentView(with uiModel: UserUiModel) -> some View {

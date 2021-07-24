@@ -2,7 +2,7 @@ import Shared
 import SwiftUI
 
 struct RepoView: View {
-    @InjectedStateObject var viewModel: RepoViewModel
+    @StateObject var viewModel: RepoViewModel = get(\.repoViewModel)
 
     let owner: String
 

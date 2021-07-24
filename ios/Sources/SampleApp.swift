@@ -12,6 +12,8 @@ struct SampleApp: App {
                 SearchView()
                     .navigationBarTitle(Text("GitHub Browser"), displayMode: .inline)
             }
+            // ref. https://stackoverflow.com/a/64752414
+            .navigationViewStyle(StackNavigationViewStyle())
         }
     }
 }

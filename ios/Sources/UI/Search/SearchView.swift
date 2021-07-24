@@ -2,7 +2,7 @@ import Shared
 import SwiftUI
 
 struct SearchView: View {
-    @InjectedStateObject private var viewModel: SearchViewModel
+    @StateObject private var viewModel: SearchViewModel = get(\.searchViewModel)
 
     var body: some View {
         _SearchView(
