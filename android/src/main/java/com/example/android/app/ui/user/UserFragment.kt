@@ -54,7 +54,7 @@ class UserFragment : Fragment(), RepoClickListener, RetryView.Callback {
     }
 
     private fun initRepoRecyclerView() {
-        repoListAdapter = RepoListAdapter(this, visibleRepoOwner = false)
+        repoListAdapter = RepoListAdapter(this)
         binding.repoList.apply {
             adapter = repoListAdapter
             addItemDecoration(

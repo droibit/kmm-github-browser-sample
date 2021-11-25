@@ -24,13 +24,6 @@ plugins {
 }
 
 subprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven(url = "https://repo.repsy.io/mvn/droibit/public")
-        maven(url = "https://repo.repsy.io/mvn/chrynan/public")
-    }
-
     apply(plugin = "com.diffplug.spotless")
 
     spotless {
