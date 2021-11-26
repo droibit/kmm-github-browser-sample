@@ -6,7 +6,7 @@ object Deps {
         const val navSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Androidx.Navigation.version}"
 
         object Kotlin {
-            internal const val version = "1.5.21"
+            internal const val version = "1.6.0"
             const val gradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
             const val serialization = "org.jetbrains.kotlin:kotlin-serialization:$version"
         }
@@ -14,14 +14,14 @@ object Deps {
 
     object Coroutines {
         // Strictly requires `native-mt` version.
-        private const val version = "1.5.0-native-mt!!"
+        private const val version = "1.6.0-RC"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${version}"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
     }
 
     object Stately {
-        const val common = "co.touchlab:stately-common:1.1.4"
+        const val common = "co.touchlab:stately-common:1.2.0"
     }
 
     object Androidx {
@@ -48,13 +48,13 @@ object Deps {
     }
 
     object Serialization {
-        private const val version = "1.2.1"
+        private const val version = "1.3.1"
         const val core = "org.jetbrains.kotlinx:kotlinx-serialization-core:$version"
         const val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:$version"
     }
 
     object Ktor {
-        private const val version = "1.6.0"
+        private const val version = "1.6.6"
 
         object Client {
             const val core = "io.ktor:ktor-client-core:$version"
@@ -88,7 +88,7 @@ object Deps {
     }
 
     object Komol {
-        private const val version = "0.0.3"
+        private const val version = "0.1.0"
         const val core = "com.github.droibit.komol:komol-core:$version"
         const val timber = "com.github.droibit.komol:komol-timber:$version"
     }
@@ -106,7 +106,7 @@ object Deps {
 
     const val materialDesign = "com.google.android.material:material:1.4.0-rc01"
     const val coil = "io.coil-kt:coil:1.2.2"
-    const val inject = "com.chrynan.inject:inject:0.8.0"
+    const val inject = "com.chrynan.inject:inject:1.0.0"
 
     object Version {
         const val ktlint = "0.40.0"

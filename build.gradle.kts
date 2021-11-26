@@ -6,6 +6,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     repositories {
+        gradlePluginPortal()
         google()
         mavenCentral()
     }
@@ -21,6 +22,15 @@ buildscript {
 
 plugins {
     id("com.diffplug.spotless") version Deps.Version.spotless
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://repo.repsy.io/mvn/chrynan/public") }
+        maven { url = uri("https://repo.repsy.io/mvn/droibit/public") }
+    }
 }
 
 subprojects {
