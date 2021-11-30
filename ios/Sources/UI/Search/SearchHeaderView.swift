@@ -17,14 +17,14 @@ struct SearchHeaderView: View {
         TextField("Search repositories", text: query, onCommit: {
             self.onSubmitQuery()
         })
-            .disabled(disabled)
-            .textFieldStyle(PlainTextFieldStyle())
-            .textContentType(.none)
-            .autocapitalization(.none)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(Color.gray.opacity(0.25))
-            .cornerRadius(8.0)
+        .disabled(disabled)
+        .textFieldStyle(PlainTextFieldStyle())
+        .textContentType(.none)
+        .autocapitalization(.none)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(Color.gray.opacity(0.25))
+        .cornerRadius(8.0)
     }
 }
 

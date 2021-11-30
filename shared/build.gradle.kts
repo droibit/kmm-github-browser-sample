@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-
 plugins {
     kotlin("multiplatform")
     kotlin("kapt")
@@ -35,17 +33,13 @@ android {
 
 kotlin {
     android()
-
-    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
-        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
-            ::iosArm64
-        else
-            ::iosX64
-
-    iosTarget("ios") {
+    ios() {
         binaries {
             framework {
                 baseName = "Shared"
+                linkerOpts("-lsqlite3")
+                export(Deps.Komol.core)
+                // transitiveExport = true
             }
         }
     }
@@ -62,7 +56,7 @@ kotlin {
                 implementation(Deps.SQLDelight.runtime)
                 implementation(Deps.SQLDelight.coroutines)
                 api(Deps.inject)
-                implementation(Deps.Komol.core)
+                api(Deps.Komol.core)
             }
         }
         val commonTest by getting {
@@ -116,18 +110,3 @@ kapt {
         arg("dagger.experimentalDaggerErrorMessages", "enabled")
     }
 }
-
-val packForXcode by tasks.creating(Sync::class) {
-    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-    val framework = kotlin.targets.getByName<KotlinNativeTarget>("ios").binaries.getFramework(mode)
-    val targetDir = File(buildDir, "xcode-frameworks")
-
-    group = "build"
-    dependsOn(framework.linkTask)
-    inputs.property("mode", mode)
-
-    from({ framework.outputDirectory })
-    into(targetDir)
-}
-
-tasks.getByName("build").dependsOn(packForXcode)

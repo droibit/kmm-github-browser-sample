@@ -1,6 +1,6 @@
 name: GitHubBrowserSample
 options:
-  xcodeVersion: "12.0"
+  xcodeVersion: "13.0"
   deploymentTarget:
     iOS:  "14.0"
   developmentLanguage: en
@@ -12,10 +12,10 @@ settings:
 packages:
   CombineSchedulers:
     url: https://github.com/pointfreeco/combine-schedulers
-    version: 0.5.0
+    version: 0.5.3
   NukeUI:
     url: https://github.com/kean/NukeUI
-    version: 0.6.2    
+    version: 0.7.0
 
 targets:
   GitHubBrowserSample:
